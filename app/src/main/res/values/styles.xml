@@ -8,8 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="HeadLineTextView">
+    <style name="BigHeadLineTextView">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+    </style>
+
+    <style name="SmallHeadLineTextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:textColor">@color/textColorBlack</item>
     </style>
 
     <style name="HintTextView">

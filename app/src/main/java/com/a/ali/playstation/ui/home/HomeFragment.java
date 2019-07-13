@@ -1,6 +1,5 @@
 package com.a.ali.playstation.ui.home;
 
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,10 +19,5 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, parent, false);
 
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 }
