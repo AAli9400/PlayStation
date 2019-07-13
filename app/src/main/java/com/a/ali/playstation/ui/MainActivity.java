@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         actionBar.hide();
                         break;
 
-                    case R.id.homeFragment:
-                        actionBar.show();
+                    case R.id.roomFragment:
                         actionBar.setTitle(getString(R.string.home));
                         actionBar.setDisplayHomeAsUpEnabled(false);
                         break;
@@ -66,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         NavDestination navController = mNavController.getCurrentDestination();
 
-        if (navController != null && navController.getId() == R.id.homeFragment) {
+        if (navController != null && navController.getId() == R.id.roomFragment) {
             this.finish();
         } else {
             super.onBackPressed();
         }
     }
+
+
 }

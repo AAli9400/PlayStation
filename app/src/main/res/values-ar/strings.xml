@@ -7,4 +7,5 @@
     <string name="home">الصفحة الرئيسية</string>
     <string name="reports">Reports</string>
     <string name="logout">Logout</string>
+    <string name="rooms">Rooms</string>
 </resources>
