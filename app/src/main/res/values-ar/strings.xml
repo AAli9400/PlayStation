@@ -8,4 +8,5 @@
     <string name="reports">Reports</string>
     <string name="logout">Logout</string>
     <string name="rooms">Rooms</string>
+    <string name="no_internet_connection">Check Your Internet Connection</string>
 </resources>

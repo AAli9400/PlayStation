@@ -1,15 +1,6 @@
 package com.a.ali.playstation.ui.rooms;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.ui.MainActivity;
@@ -47,7 +46,7 @@ public class RoomFragment extends Fragment {
                     mRoomsRecyclerView.setAdapter(mRoomAdapter);
                     mLoadingProgressBar.setVisibility(View.GONE);
                 },
-                3000
+                1000
         );
 
         return view;

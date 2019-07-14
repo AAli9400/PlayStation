@@ -1,18 +1,15 @@
 package com.a.ali.playstation.ui.rooms.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.ui.util.AppDialog;
 import com.google.android.material.button.MaterialButton;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
@@ -37,21 +34,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     }
 
     private void showOrdersDialog(int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-        View view = LayoutInflater.from(mContext).inflate(R.layout.orders_dialog, null);
-        builder.setView(view);
-
-        AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        RecyclerView ordersRecyclerView = view.findViewById(R.id.recyclerview);
-        ordersRecyclerView.setAdapter(new OrderAdapter());
-
-        ImageView closeImageView = view.findViewById(R.id.iv_close);
-        closeImageView.setOnClickListener(view1 -> dialog.dismiss());
-
-        dialog.show();
+        AppDialog.show(mContext, R.layout.orders_dialog, (view, dialog) -> {
+            RecyclerView ordersRecyclerView = view.findViewById(R.id.recyclerview);
+            ordersRecyclerView.setAdapter(new OrderAdapter());
+        });
     }
 
     @Override

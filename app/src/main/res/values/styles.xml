@@ -40,4 +40,9 @@
     <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="cornerRadius">16dp</item>
     </style>
+
+    <style name="Spinner" parent="Widget.AppCompat.Spinner">
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:background">@drawable/rounded_corners_background</item>
+    </style>
 </resources>
