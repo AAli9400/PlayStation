@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,7 +14,7 @@
 
     <style name="SmallHeadLineTextView">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="android:textColor">@color/textColorBlack</item>
+        <item name="android:textColor">@color/textColorWhite</item>
     </style>
 
     <style name="HintTextView">
@@ -35,6 +35,8 @@
 
     <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">16dp</item>
+        <item name="strokeColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColorWhite</item>
     </style>
 
     <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
@@ -43,6 +45,6 @@
 
     <style name="Spinner" parent="Widget.AppCompat.Spinner">
         <item name="android:spinnerMode">dropdown</item>
-        <item name="android:background">@drawable/rounded_corners_background</item>
+        <item name="android:background">@drawable/dialog_background</item>
     </style>
 </resources>

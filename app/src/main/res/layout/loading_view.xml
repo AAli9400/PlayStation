@@ -8,6 +8,6 @@
     android:layout_height="match_parent"
     android:padding="160dp"
     android:visibility="gone"
-    android:background="@color/colorWhite"
+    android:background="@color/colorDialogBackground"
     app:layout_constraintBottom_toBottomOf="parent"
     tools:visibility="visible" />
