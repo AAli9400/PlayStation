@@ -25,8 +25,8 @@
         android:label="@string/rooms"
         tools:layout="@layout/fragment_room" >
         <action
-            android:id="@+id/action_roomFragment_to_reportsFragment"
-            app:destination="@id/reportsFragment"
+            android:id="@+id/action_room_to_selectReport"
+            app:destination="@id/selectReportFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -37,4 +37,17 @@
         android:name="com.a.ali.playstation.ui.reports.ReportsFragment"
         tools:layout="@layout/fragment_reports"
         android:label="ReportsFragment" />
+    <fragment
+        android:id="@+id/selectReportFragment"
+        android:name="com.a.ali.playstation.ui.reports.SelectReportFragment"
+        android:label="ReportsFragment"
+        tools:layout="@layout/fragment_select_report" >
+        <action
+            android:id="@+id/action_selectReport_to_reports"
+            app:destination="@id/reportsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>
