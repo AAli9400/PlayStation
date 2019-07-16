@@ -49,12 +49,14 @@ public class SelectReportFragment extends Fragment {
             mReportCalenderFrom.setTimeInMillis(System.currentTimeMillis());
             new DatePickerDialog(
                     mContext,
+                    R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                     (datePicker, year, month, day) -> {
                         mReportCalenderFrom.set(Calendar.YEAR, year);
                         mReportCalenderFrom.set(Calendar.MONTH, month);
                         mReportCalenderFrom.set(Calendar.DAY_OF_MONTH, day);
                         new TimePickerDialog(
                                 mContext,
+                                R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                                 (timePicker, hour, minute) -> {
                                     mReportCalenderFrom.set(Calendar.HOUR, hour);
                                     mReportCalenderFrom.set(Calendar.MINUTE, minute);
@@ -82,12 +84,14 @@ public class SelectReportFragment extends Fragment {
             mReportCalenderTo.setTimeInMillis(System.currentTimeMillis());
             new DatePickerDialog(
                     mContext,
+                   R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                     (datePicker, year, month, day) -> {
                         mReportCalenderTo.set(Calendar.YEAR, year);
                         mReportCalenderTo.set(Calendar.MONTH, month);
                         mReportCalenderTo.set(Calendar.DAY_OF_MONTH, day);
                         new TimePickerDialog(
                                 mContext,
+                                R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                                 (timePicker, hour, minute) -> {
                                     mReportCalenderTo.set(Calendar.HOUR, hour);
                                     mReportCalenderTo.set(Calendar.MINUTE, minute);
