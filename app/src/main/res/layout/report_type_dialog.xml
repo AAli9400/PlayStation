@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_white_rounded_16">
+    android:background="@drawable/dialog_background">
 
     <ImageView
         android:id="@+id/iv_close"
@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/background_primary_dark_oval"
+        android:background="@drawable/background_accent_color_oval"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_black_24dp" />
+        app:srcCompat="@drawable/ic_close" />
 
     <TextView
         android:id="@+id/textView8"

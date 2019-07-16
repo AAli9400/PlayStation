@@ -16,7 +16,7 @@ public class AppDialog {
     private AppDialog() {
     }
 
-    public static void show(@NonNull Context context, int resId, Helper helper) {
+    public static void show(@NonNull Context context, int resId, @NonNull Helper helper) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         View view = LayoutInflater.from(context).inflate(resId, null);
