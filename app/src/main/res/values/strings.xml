@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">PlayStation</string>
+    <string name="app_name" translatable="false">PlayStation</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -12,4 +10,8 @@
     <string name="logout">Logout</string>
     <string name="rooms">Rooms</string>
     <string name="no_internet_connection">Check Your Internet Connection</string>
+    <string name="cafe_orders">Cafe Orders</string>
+    <string name="start_date">Start Date</string>
+    <string name="single_playing_period">Single Playing Period</string>
+    <string name="multi_playing_period">Multi Playing Period</string>
 </resources>

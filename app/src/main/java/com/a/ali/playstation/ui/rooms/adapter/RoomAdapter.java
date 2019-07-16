@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.ui.util.AppDialog;
@@ -31,6 +34,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.ordersButton.setOnClickListener(view -> showOrdersDialog(position));
+        if (position > 10) {
+            holder.detailsConstraintLayout.setVisibility(View.GONE);
+            holder.roomStatusImageView.setImageDrawable(
+                    VectorDrawableCompat.create(
+                            mContext.getResources(),
+                            R.drawable.empty_background,
+                            null
+                    )
+            );
+        }
     }
 
     private void showOrdersDialog(int position) {
@@ -47,11 +60,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         MaterialButton ordersButton;
+        ConstraintLayout detailsConstraintLayout;
+        ImageView roomStatusImageView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ordersButton = itemView.findViewById(R.id.mbtn_orders);
+            detailsConstraintLayout = itemView.findViewById(R.id.cl_room_details);
+            roomStatusImageView = itemView.findViewById(R.id.iv_room_status);
         }
     }
 }

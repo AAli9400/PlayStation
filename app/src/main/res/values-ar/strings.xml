@@ -9,4 +9,8 @@
     <string name="logout">Logout</string>
     <string name="rooms">Rooms</string>
     <string name="no_internet_connection">Check Your Internet Connection</string>
+    <string name="cafe_orders">Cafe Orders</string>
+    <string name="start_date">Start Date</string>
+    <string name="single_playing_period">Single Playing Period</string>
+    <string name="multi_playing_period">Multi Playing Period</string>
 </resources>

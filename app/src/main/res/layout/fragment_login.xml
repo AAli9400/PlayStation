@@ -14,6 +14,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:rotation="35"
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_controller" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_user_name"
             style="@style/OutlinedTextInputLayout"
@@ -24,14 +37,14 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:hint="@string/username"
                 android:inputType="text"
-                android:hint="@string/username" />
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,16 +82,20 @@
             style="@style/Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:text="@string/login"
+            app:icon="@drawable/ic_start"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/til_password"
             app:layout_constraintStart_toStartOf="@+id/til_password"
             app:layout_constraintTop_toBottomOf="@+id/mbtn_forget_password"
             app:layout_constraintVertical_bias="0.0" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
