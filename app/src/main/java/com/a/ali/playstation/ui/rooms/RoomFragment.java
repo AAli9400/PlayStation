@@ -1,7 +1,7 @@
 package com.a.ali.playstation.ui.rooms;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.MainActivity;
 import com.a.ali.playstation.ui.rooms.adapter.RoomAdapter;
 
@@ -28,35 +28,39 @@ public class RoomFragment extends Fragment {
 
     private RoomAdapter mRoomAdapter;
 
+    private AppNetworkRepository mAppNetworkRepository;
+    private Context mContext;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_room, parent, false);
         setHasOptionsMenu(true);
 
+        mContext = getContext();
+        mAppNetworkRepository = AppNetworkRepository.getInstance(getActivity().getApplication());
+
         mLoadingProgressBar = view.findViewById(R.id.progressBar);
 
         mRoomsRecyclerView = view.findViewById(R.id.recyclerview);
 
-        mRoomAdapter = new RoomAdapter(getContext());
+        mRoomAdapter = new RoomAdapter(mContext, mAppNetworkRepository, this);
 
-        mLoadingProgressBar.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(
-                () -> {
-                    mRoomsRecyclerView.setAdapter(mRoomAdapter);
-                    mLoadingProgressBar.setVisibility(View.GONE);
-                },
-                1000
-        );
+        loadRooms();
 
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void loadRooms() {
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        mAppNetworkRepository.loadRooms()
+                .observe(this, response -> {
+                    if (response != null) {
+                        //TODO:
+                    }
+                    mLoadingProgressBar.setVisibility(View.GONE);
+                });
     }
 
     @Override

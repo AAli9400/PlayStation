@@ -13,4 +13,8 @@
     <string name="start_date">Start Date</string>
     <string name="single_playing_period">Single Playing Period</string>
     <string name="multi_playing_period">Multi Playing Period</string>
+    <string name="username_required">Username Required.</string>
+    <string name="password_required">Password Required.</string>
+    <string name="date_from_required">Date From Is Required.</string>
+    <string name="date_to_required">Date To Is Required.</string>
 </resources>

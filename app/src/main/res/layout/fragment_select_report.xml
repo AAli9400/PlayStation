@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Shift:"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintBottom_toBottomOf="@+id/s_shift"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinner" />
+        app:layout_constraintTop_toTopOf="@+id/s_shift" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/s_shift"
         style="@style/Spinner"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -33,13 +33,13 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
-        app:layout_constraintEnd_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="@+id/spinner"
+        app:layout_constraintBottom_toBottomOf="@+id/s_shift"
+        app:layout_constraintEnd_toEndOf="@+id/s_shift"
+        app:layout_constraintTop_toTopOf="@+id/s_shift"
         app:srcCompat="@drawable/ic_spinner_arrow_down" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/rg_report_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner">
+        app:layout_constraintTop_toBottomOf="@+id/s_shift">
 
         <RadioButton
             android:id="@+id/rb_playstation"
@@ -109,7 +109,7 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier2"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+        app:layout_constraintTop_toBottomOf="@+id/rg_report_type">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

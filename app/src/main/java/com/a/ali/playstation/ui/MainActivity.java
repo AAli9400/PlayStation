@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.roomFragment:
                         actionBar.setTitle(getString(R.string.home));
+                        actionBar.show();
                         actionBar.setDisplayHomeAsUpEnabled(false);
                         break;
 
