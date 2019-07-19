@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.CafeOrders;
 import com.a.ali.playstation.data.model.Console;
+import com.a.ali.playstation.data.model.PlayReport;
 import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 import com.a.ali.playstation.data.network.networkUtil.AppNetworkConnectivityUtil;
@@ -70,17 +71,27 @@ public class AppNetworkRepository extends AppRepository {
                 mRetrofitMethods.loadOrders(consoleCode));
     }
 
-    public LiveData<String> loadReport(int selectedShiftPosition, int checkedReportTypeRadioButtonId, @NonNull Date reportDateFrom, @NonNull Date reportDateTo) {
-        return new RetrofitRequest<String>().enqueue(() ->
-                mRetrofitMethods.loadReport(selectedShiftPosition, checkedReportTypeRadioButtonId, reportDateFrom, reportDateTo));
-    }
-
     public void resetIp(@NonNull String newIpAddress) {
         ApiUrlConstants.resetIpAddress(newIpAddress);
 
         mRetrofitMethods = new Retrofit.Builder().baseUrl(ApiUrlConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RetrofitMethods.class);
+    }
+
+    public LiveData<List<PlayReport>> playReport(@NonNull String shiftName,
+                                                 @NonNull String startDate,
+                                                 @NonNull String startHour,
+                                                 @NonNull String startMinute,
+                                                 @NonNull String am_pm_start,
+                                                 @NonNull String endDate,
+                                                 @NonNull String endHour,
+                                                 @NonNull String endMinute,
+                                                 @NonNull String am_pm_end) {
+        return new RetrofitRequest<List<PlayReport>>().enqueue(() ->
+                mRetrofitMethods.playReport(shiftName,
+                        startDate, startHour, startMinute, am_pm_start,
+                        endDate, endHour, endMinute, am_pm_end));
     }
 
     private class RetrofitRequest<T> {

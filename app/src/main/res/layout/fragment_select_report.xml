@@ -5,171 +5,188 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView8"
-        style="@style/SmallHeadLineTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Shift:"
-        app:layout_constraintBottom_toBottomOf="@+id/s_shift"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/s_shift" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_report_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/s_shift"
-        style="@style/Spinner"
+        <TextView
+            android:id="@+id/textView8"
+            style="@style/SmallHeadLineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Shift:"
+            app:layout_constraintBottom_toBottomOf="@+id/s_shift"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/s_shift" />
+
+        <Spinner
+            android:id="@+id/s_shift"
+            style="@style/Spinner"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_open_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/s_shift"
+            app:layout_constraintEnd_toEndOf="@+id/s_shift"
+            app:layout_constraintTop_toTopOf="@+id/s_shift"
+            app:srcCompat="@drawable/ic_spinner_arrow_down" />
+
+        <RadioGroup
+            android:id="@+id/rg_report_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:checkedButton="@id/rb_playstation"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier2"
+            app:layout_constraintTop_toBottomOf="@+id/s_shift">
+
+            <RadioButton
+                android:id="@+id/rb_playstation"
+                style="@style/SmallHeadLineTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Playstation" />
+
+            <RadioButton
+                android:id="@+id/rb_cafe"
+                style="@style/SmallHeadLineTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Cafe" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/SmallHeadLineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="From:"
+            app:layout_constraintBottom_toBottomOf="@+id/til_from_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/til_from_date" />
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/SmallHeadLineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            app:layout_constraintBottom_toBottomOf="@+id/til_to_date"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/til_to_date" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="textView9,textView,textView8"
+            tools:layout_editor_absoluteX="411dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_from_date"
+            style="@style/OutlinedTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier2"
+            app:layout_constraintTop_toBottomOf="@+id/rg_report_type">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_to_date"
+            style="@style/OutlinedTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier2"
+            app:layout_constraintTop_toBottomOf="@+id/til_from_date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbtn_go"
+            style="@style/OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/display"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_to_date"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <View
+            android:id="@+id/view_from_date"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/til_from_date"
+            app:layout_constraintEnd_toEndOf="@+id/til_from_date"
+            app:layout_constraintStart_toStartOf="@+id/til_from_date"
+            app:layout_constraintTop_toTopOf="@+id/til_from_date" />
+
+        <View
+            android:id="@+id/view_to_date"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/til_to_date"
+            app:layout_constraintEnd_toEndOf="@+id/til_to_date"
+            app:layout_constraintStart_toStartOf="@+id/til_to_date"
+            app:layout_constraintTop_toTopOf="@+id/til_to_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/barrier2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_open_spinner"
-        android:layout_width="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/s_shift"
-        app:layout_constraintEnd_toEndOf="@+id/s_shift"
-        app:layout_constraintTop_toTopOf="@+id/s_shift"
-        app:srcCompat="@drawable/ic_spinner_arrow_down" />
-
-    <RadioGroup
-        android:id="@+id/rg_report_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:checkedButton="@id/rb_playstation"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/barrier2"
-        app:layout_constraintTop_toBottomOf="@+id/s_shift">
-
-        <RadioButton
-            android:id="@+id/rb_playstation"
-            style="@style/SmallHeadLineTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Playstation" />
-
-        <RadioButton
-            android:id="@+id/rb_cafe"
-            style="@style/SmallHeadLineTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Cafe" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/SmallHeadLineTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="From:"
-        app:layout_constraintBottom_toBottomOf="@+id/til_from_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/til_from_date" />
-
-    <TextView
-        android:id="@+id/textView9"
-        style="@style/SmallHeadLineTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="To:"
-        app:layout_constraintBottom_toBottomOf="@+id/til_to_date"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/til_to_date" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="textView9,textView,textView8"
-        tools:layout_editor_absoluteX="411dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_from_date"
-        style="@style/OutlinedTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/barrier2"
-        app:layout_constraintTop_toBottomOf="@+id/rg_report_type">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_to_date"
-        style="@style/OutlinedTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/barrier2"
-        app:layout_constraintTop_toBottomOf="@+id/til_from_date">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbtn_go"
-        style="@style/OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/display"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_to_date"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view_from_date"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/til_from_date"
-        app:layout_constraintEnd_toEndOf="@+id/til_from_date"
-        app:layout_constraintStart_toStartOf="@+id/til_from_date"
-        app:layout_constraintTop_toTopOf="@+id/til_from_date" />
-
-    <View
-        android:id="@+id/view_to_date"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/til_to_date"
-        app:layout_constraintEnd_toEndOf="@+id/til_to_date"
-        app:layout_constraintStart_toStartOf="@+id/til_to_date"
-        app:layout_constraintTop_toTopOf="@+id/til_to_date" />
-
-
-    <include layout="@layout/loading_view"
-        tools:visibility="invisible"/>
+    <include
+        layout="@layout/loading_view"
+        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

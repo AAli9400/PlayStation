@@ -7,22 +7,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,6 +40,10 @@ public class SelectReportFragment extends Fragment {
 
     private Spinner mShiftSpinner;
     private RadioGroup mReportTypeRadioGroup;
+
+    private RecyclerView mReportRecyclerView;
+
+    private ConstraintLayout mReportDetailsConstraintLayout;
 
     private Context mContext;
     private AppNetworkRepository mAppNetworkRepository;
@@ -54,14 +63,31 @@ public class SelectReportFragment extends Fragment {
         mLoadingViewUtil = new AppLoadingViewUtil(mContext, mLoadingImageView);
         mLoadingImageView.setImageDrawable(mLoadingViewUtil.getDrawable());
 
+        mReportRecyclerView = view.findViewById(R.id.recyclerview);
+        mReportDetailsConstraintLayout = view.findViewById(R.id.cl_report_details);
+
         setupReportDates(view);
 
         MaterialButton goButton = view.findViewById(R.id.mbtn_go);
         goButton.setOnClickListener(view1 -> {
-
+            validateReportData();
         });
 
         return view;
+    }
+
+    private void loadShifts() {
+        mAppNetworkRepository.getAllUsers().observe(this, users -> {
+            if (users != null) {
+                ArrayList<String> usernames = new ArrayList<>();
+                for (User user : users) {
+                    usernames.add(user.getUserN());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, usernames);
+                mShiftSpinner.setAdapter(adapter);
+            }
+        });
     }
 
     private void setupReportDates(@NonNull View view) {
@@ -72,7 +98,7 @@ public class SelectReportFragment extends Fragment {
             mReportCalenderFrom.setTimeInMillis(System.currentTimeMillis());
             new DatePickerDialog(
                     mContext,
-                    R.style.Theme_AppCompat_DayNight_Dialog,
+                    R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                     (datePicker, year, month, day) -> {
                         mReportCalenderFrom.set(Calendar.YEAR, year);
                         mReportCalenderFrom.set(Calendar.MONTH, month);
@@ -137,7 +163,7 @@ public class SelectReportFragment extends Fragment {
     }
 
     private void validateReportData() {
-        int selectedShiftPosition = mShiftSpinner.getSelectedItemPosition();
+        String selectedShiftName = (String) mShiftSpinner.getSelectedItem();
         int checkedReportTypeRadioButtonId = mReportTypeRadioGroup.getCheckedRadioButtonId();
 
         if (mReportDateFrom == null) {
@@ -147,16 +173,24 @@ public class SelectReportFragment extends Fragment {
         } else {
             mLoadingViewUtil.show();
 
-            mAppNetworkRepository.loadReport(selectedShiftPosition, checkedReportTypeRadioButtonId, mReportDateTo, mReportDateTo)
-                    .observe(this, response -> {
-                        if (response != null) {
-                            //TODO:
-                            Navigation.findNavController(getActivity(), R.id.navHostFragment)
-                                    .navigate(R.id.action_selectReport_to_reports);
-                        }
+            mReportDetailsConstraintLayout.setVisibility(View.GONE);
+            mReportRecyclerView.setVisibility(View.VISIBLE);
 
-                        mLoadingViewUtil.hide();
-                    });
+            if (checkedReportTypeRadioButtonId == R.id.rb_playstation) {
+
+
+            } else if (checkedReportTypeRadioButtonId == R.id.rb_cafe){
+
+            }
+//
+//            mAppNetworkRepository.loadReport(selectedShiftPosition, checkedReportTypeRadioButtonId, mReportDateTo, mReportDateTo)
+//                    .observe(this, response -> {
+//                        if (response != null) {
+//                            //TODO:
+//                        }
+//
+//                        mLoadingViewUtil.hide();
+//                    });
         }
     }
 }

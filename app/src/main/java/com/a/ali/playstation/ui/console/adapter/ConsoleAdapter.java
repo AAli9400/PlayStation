@@ -29,9 +29,6 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
     private AppNetworkRepository mAppNetworkRepository;
     private Fragment mOwnerFragment;
 
-    /*
-     * [{"DepositCash":0,"dev_code":"ps01","single_multi":"multi","startTime":"18\/07\/2019 02:07:29 م","state":"playing"},{"DepositCash":0,"dev_code":"ps01","single_multi":"single","startTime":"18\/07\/2019 01:58:29 م","state":"finish transforming"},{"DepositCash":0,"dev_code":"ps02","single_multi":"single","startTime":"18\/05\/2019 05:39:57 م","state":"finish"},{"DepositCash":0,"dev_code":"ps03","single_multi":"multi","startTime":"18\/07\/2019 02:13:01 م","state":"playing"},{"DepositCash":0,"dev_code":"ps03","single_multi":"single","startTime":"18\/07\/2019 01:58:26 م","state":"finish transforming"},{"DepositCash":0,"dev_code":"ps04","single_multi":"single","startTime":"18\/07\/2019 01:58:23 م","state":"playing"},{"DepositCash":0,"dev_code":"ps05","single_multi":"multi","startTime":"18\/07\/2019 02:13:07 م","state":"playing"},{"DepositCash":0,"dev_code":"ps07","single_multi":"single","startTime":"12\/04\/2019 04:30:53 م","state":"finish"},{"DepositCash":0,"dev_code":"ps10","single_multi":"single","startTime":"18\/05\/2019 11:19:22 م","state":"finish"}]*/
-
     private List<Console> mConsoles = null;
 
     public ConsoleAdapter(Context context, AppNetworkRepository appNetworkRepository, Fragment ownerFragment) {
@@ -45,7 +42,7 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(
                 LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.room_list_item, parent, false)
+                        .inflate(R.layout.console_list_item, parent, false)
         );
     }
 
@@ -95,6 +92,8 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
                     mOwnerFragment, response -> {
                         if (response != null) {
                             double price = orderAdapter.swapData(response);
+                            ((TextView) view.findViewById(R.id.tv_total_cafe_order))
+                                    .setText(String.valueOf(price));
 
                         } else {
                             dialog.dismiss();

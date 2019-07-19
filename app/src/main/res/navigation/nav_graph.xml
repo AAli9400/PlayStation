@@ -23,23 +23,10 @@
             app:destination="@id/IpFragment" />
     </fragment>
     <fragment
-        android:id="@+id/reportsFragment"
-        android:name="com.a.ali.playstation.ui.reports.ReportsFragment"
-        tools:layout="@layout/fragment_reports"
-        android:label="ReportsFragment" />
-    <fragment
         android:id="@+id/selectReportFragment"
         android:name="com.a.ali.playstation.ui.reports.SelectReportFragment"
         android:label="ReportsFragment"
-        tools:layout="@layout/fragment_select_report" >
-        <action
-            android:id="@+id/action_selectReport_to_reports"
-            app:destination="@id/reportsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_select_report" />
     <fragment
         android:id="@+id/consoleFragment"
         android:name="com.a.ali.playstation.ui.console.ConsoleFragment"

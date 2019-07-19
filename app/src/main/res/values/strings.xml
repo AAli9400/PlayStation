@@ -35,4 +35,5 @@
     <string name="user_title_key" translatable="false">userTitle_key</string>
     <string name="display">Display</string>
     <string name="set_ip_address">Set Ip Address</string>
+    <string name="total">Total:</string>
 </resources>

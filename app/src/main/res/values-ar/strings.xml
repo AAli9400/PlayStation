@@ -28,4 +28,5 @@
     <string name="username_not_found">إسم المستخدم غير موجود.</string>
     <string name="display">عرض</string>
     <string name="set_ip_address">Set Ip Address</string>
+    <string name="total">Total:</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import com.a.ali.playstation.data.database.dao.ConsoleDao;
 import com.a.ali.playstation.data.model.Console;
 
-@Database(entities = {Console.class}, version = 1)
+@Database(entities = {Console.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ConsoleDao consoleDao();
 
