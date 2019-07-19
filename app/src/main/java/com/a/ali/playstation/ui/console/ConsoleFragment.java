@@ -105,7 +105,7 @@ public class ConsoleFragment extends Fragment {
                 .getString(getString(R.string.user_title_key), null);
 
         if (userTitle != null && userTitle.equals(User.TITLE_SHIFT)) {
-            menu.getItem(R.id.reportsFragment).setVisible(false);
+            menu.getItem(R.id.selectReportFragment).setVisible(false);
         }
     }
 
