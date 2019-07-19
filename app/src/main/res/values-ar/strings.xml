@@ -5,16 +5,15 @@
     <string name="password">كلمة المرور</string>
     <string name="forget_password">نسيت كلمه السر ؟</string>
     <string name="home">الصفحة الرئيسية</string>
-    <string name="reports">Reports</string>
-    <string name="logout">Logout</string>
-    <string name="rooms">Rooms</string>
-    <string name="no_internet_connection">Check Your Internet Connection</string>
-    <string name="cafe_orders">Cafe Orders</string>
-    <string name="start_date">Start Date</string>
-    <string name="single_playing_period">Single Playing Period</string>
-    <string name="multi_playing_period">Multi Playing Period</string>
-    <string name="username_required">Username Required.</string>
-    <string name="password_required">Password Required.</string>
-    <string name="date_from_required">Date From Is Required.</string>
-    <string name="date_to_required">Date To Is Required.</string>
+    <string name="reports">التقارير</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="consoles">الأجهزة</string>
+    <string name="no_internet_connection">تأكد من اتصالك بالإنترنت</string>
+    <string name="cafe_orders">طلبات المقهي</string>
+    <string name="start_date">وقت البداية</string>
+    <string name="single_or_multi">زوجي أم فردي ؟</string>
+    <string name="username_required">إسم المستخدم مطلوب.</string>
+    <string name="password_required">كلمة المرور مطلوبة.</string>
+    <string name="date_from_required">تاريخ البداية مطلوب.</string>
+    <string name="date_to_required">تاريخ النهاية مطلوب.</string>
 </resources>

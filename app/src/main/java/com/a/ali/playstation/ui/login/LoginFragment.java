@@ -2,7 +2,6 @@ package com.a.ali.playstation.ui.login;
 
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,6 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
-import com.a.ali.playstation.data.repository.AppRepository;
-import com.a.ali.playstation.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -79,37 +76,49 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean validateUserInfo() {
-        mLogoAnimatable2Compat.start();
 
-        String userName = mUserNameTextInputLayout.getEditText().getText().toString();
-        if (userName.isEmpty()) {
-            mUserNameTextInputLayout.setError(getString(R.string.username_required));
-            return false;
-        } else {
-            mUserNameTextInputLayout.setError(null);
+        Navigation.findNavController(getActivity(), R.id.navHostFragment)
+                .navigate(R.id.action_login_to_console);
 
-            String password = mPasswordTextInputLayout.getEditText().getText().toString();
-            if (password.isEmpty()) {
-                mPasswordTextInputLayout.setError(getString(R.string.password_required));
-                return false;
-            } else {
-                mPasswordTextInputLayout.setError(null);
-                login(userName, password);
-            }
-        }
+        return false;
 
-        return true;
+//        mLogoAnimatable2Compat.start();
+//
+//        String userName = mUserNameTextInputLayout.getEditText().getText().toString();
+//        if (userName.isEmpty()) {
+//            mUserNameTextInputLayout.setError(getString(R.string.username_required));
+//            return false;
+//        } else {
+//            mUserNameTextInputLayout.setError(null);
+//
+//            String password = mPasswordTextInputLayout.getEditText().getText().toString();
+//            if (password.isEmpty()) {
+//                mPasswordTextInputLayout.setError(getString(R.string.password_required));
+//                return false;
+//            } else {
+//                mPasswordTextInputLayout.setError(null);
+//                login(userName, password);
+//            }
+//        }
+//
+//        return true;
     }
 
     private void login(@NonNull String userName, @NonNull String password) {
-        mAppNetworkRepository.login(userName, password)
-                .observe(this, response -> {
-                    if (response != null) {
-                        //TODO:
-                        Navigation.findNavController(getActivity(), R.id.navHostFragment)
-                                .navigate(R.id.action_login_to_home);
-                    }
-                    mLogoAnimatable2Compat.stop();
-                });
+//        mAppNetworkRepository.login(userName, password)
+//                .observe(this, response -> {
+//                    if (response != null) {
+//                        //TODO:
+//                    }
+//                    mLogoAnimatable2Compat.stop();
+//                    Navigation.findNavController(getActivity(), R.id.navHostFragment)
+//                            .navigate(R.id.action_login_to_home);
+//                });
+//
+//        new Handler().postDelayed(() -> {
+//            mLogoAnimatable2Compat.stop();
+//            Navigation.findNavController(getActivity(), R.id.navHostFragment)
+//                    .navigate(R.id.action_login_to_home);
+//        }, 500);
     }
 }

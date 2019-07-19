@@ -8,12 +8,11 @@
     <string name="home">Home</string>
     <string name="reports">Reports</string>
     <string name="logout">Logout</string>
-    <string name="rooms">Rooms</string>
+    <string name="consoles">Consoles</string>
     <string name="no_internet_connection">Check Your Internet Connection</string>
     <string name="cafe_orders">Cafe Orders</string>
     <string name="start_date">Start Date</string>
-    <string name="single_playing_period">Single Playing Period</string>
-    <string name="multi_playing_period">Multi Playing Period</string>
+    <string name="single_or_multi">Single or Multi ?</string>
     <string name="username_required">Username Required.</string>
     <string name="password_required">Password Required.</string>
     <string name="date_from_required">Date From Is Required.</string>

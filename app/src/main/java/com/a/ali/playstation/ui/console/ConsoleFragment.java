@@ -1,4 +1,4 @@
-package com.a.ali.playstation.ui.rooms;
+package com.a.ali.playstation.ui.console;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,13 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.MainActivity;
-import com.a.ali.playstation.ui.rooms.adapter.RoomAdapter;
+import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
 
-public class RoomFragment extends Fragment {
+public class ConsoleFragment extends Fragment {
     private RecyclerView mRoomsRecyclerView;
     private ProgressBar mLoadingProgressBar;
 
-    private RoomAdapter mRoomAdapter;
+    private ConsoleAdapter mConsoleAdapter;
 
     private AppNetworkRepository mAppNetworkRepository;
     private Context mContext;
@@ -44,7 +44,8 @@ public class RoomFragment extends Fragment {
 
         mRoomsRecyclerView = view.findViewById(R.id.recyclerview);
 
-        mRoomAdapter = new RoomAdapter(mContext, mAppNetworkRepository, this);
+        mConsoleAdapter = new ConsoleAdapter(mContext, mAppNetworkRepository, this);
+        mRoomsRecyclerView.setAdapter(mConsoleAdapter);
 
         loadRooms();
 
@@ -57,7 +58,7 @@ public class RoomFragment extends Fragment {
         mAppNetworkRepository.loadRooms()
                 .observe(this, response -> {
                     if (response != null) {
-                        //TODO:
+                        mConsoleAdapter.swapData(response);
                     }
                     mLoadingProgressBar.setVisibility(View.GONE);
                 });

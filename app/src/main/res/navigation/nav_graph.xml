@@ -10,27 +10,14 @@
         android:name="com.a.ali.playstation.ui.login.LoginFragment"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_home"
-            app:destination="@+id/roomFragment"
+            android:id="@+id/action_login_to_console"
+            app:destination="@id/consoleFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/roomFragment"
-        android:name="com.a.ali.playstation.ui.rooms.RoomFragment"
-        android:label="@string/rooms"
-        tools:layout="@layout/fragment_room" >
-        <action
-            android:id="@+id/action_room_to_selectReport"
-            app:destination="@id/selectReportFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/reportsFragment"
@@ -45,6 +32,19 @@
         <action
             android:id="@+id/action_selectReport_to_reports"
             app:destination="@id/reportsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/consoleFragment"
+        android:name="com.a.ali.playstation.ui.console.ConsoleFragment"
+        android:label="fragment_room"
+        tools:layout="@layout/fragment_room" >
+        <action
+            android:id="@+id/action_console_to_selectReport"
+            app:destination="@id/selectReportFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

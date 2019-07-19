@@ -9,12 +9,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 import com.a.ali.playstation.data.network.networkUtil.AppNetworkConnectivityUtil;
 import com.a.ali.playstation.data.network.retrofit.RetrofitCall;
 import com.a.ali.playstation.data.network.retrofit.RetrofitMethods;
 
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,8 +50,8 @@ public class AppNetworkRepository extends AppRepository {
                 mRetrofitMethods.login(userName, password));
     }
 
-    public LiveData<String> loadRooms() {
-        return new RetrofitRequest<String>().enqueue(() ->
+    public LiveData<List<Console>> loadRooms() {
+        return new RetrofitRequest<List<Console>>().enqueue(() ->
                 mRetrofitMethods.loadRooms());
     }
 

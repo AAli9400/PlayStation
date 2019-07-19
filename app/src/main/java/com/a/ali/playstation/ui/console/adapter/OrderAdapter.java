@@ -1,4 +1,4 @@
-package com.a.ali.playstation.ui.rooms.adapter;
+package com.a.ali.playstation.ui.console.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
