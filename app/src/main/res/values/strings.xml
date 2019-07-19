@@ -33,4 +33,6 @@
     <string name="user_shared_preferences_name" translatable="false">user</string>
     <string name="username_key" translatable="false">username_key</string>
     <string name="user_title_key" translatable="false">userTitle_key</string>
+    <string name="display">Display</string>
+    <string name="set_ip_address">Set Ip Address</string>
 </resources>

@@ -87,8 +87,7 @@ public class ConsoleFragment extends Fragment {
     }
 
     private void loadConsoles() {
-        if (isIPEntered())
-            mLoadingViewUtil.show();
+        mLoadingViewUtil.show();
 
         mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {
@@ -97,18 +96,6 @@ public class ConsoleFragment extends Fragment {
                     }
                     mLoadingViewUtil.hide();
                 });
-    }
-
-    private boolean isIPEntered() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.ip_shared_preference_name), Context.MODE_PRIVATE);
-        String ipAddress = sharedPreferences.getString(getString(R.string.ip_key), null);
-        if (ipAddress != null) {
-            return true;
-        } else {
-            Navigation.findNavController(getActivity(), R.id.navHostFragment)
-                    .navigate(R.id.action_console_to_IP);
-            return false;
-        }
     }
 
     @Override

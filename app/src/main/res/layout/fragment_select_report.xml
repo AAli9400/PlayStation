@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView8"
@@ -135,7 +135,7 @@
             android:hint="Date" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/mbtn_go"
         style="@style/OutlinedButton"
         android:layout_width="wrap_content"
@@ -144,11 +144,12 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:text="Go"
+        android:text="@string/display"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_to_date" />
+        app:layout_constraintTop_toBottomOf="@+id/til_to_date"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/view_from_date"
@@ -169,5 +170,6 @@
         app:layout_constraintTop_toTopOf="@+id/til_to_date" />
 
 
-    <include layout="@layout/loading_view"/>
+    <include layout="@layout/loading_view"
+        tools:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

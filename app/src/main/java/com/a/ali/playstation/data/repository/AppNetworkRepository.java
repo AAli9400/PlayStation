@@ -1,7 +1,7 @@
 package com.a.ali.playstation.data.repository;
 
 import android.app.Application;
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,6 +43,13 @@ public class AppNetworkRepository extends AppRepository {
     private AppNetworkRepository(Application application) {
         super(application);
 
+        ApiUrlConstants.resetIpAddress(application.getSharedPreferences(
+                application.getResources().getString(R.string.ip_shared_preference_name),
+                Context.MODE_PRIVATE
+        ).getString(application.getResources().getString(R.string.ip_key), null));
+
+        Log.v("djabfjdabf", ApiUrlConstants.BASE_URL);
+
         mRetrofitMethods = new Retrofit.Builder().baseUrl(ApiUrlConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RetrofitMethods.class);
@@ -69,7 +76,8 @@ public class AppNetworkRepository extends AppRepository {
     }
 
     public void resetIp(@NonNull String newIpAddress) {
-        ApiUrlConstants.IP_ADDRESS = newIpAddress;
+        ApiUrlConstants.resetIpAddress(newIpAddress);
+
         mRetrofitMethods = new Retrofit.Builder().baseUrl(ApiUrlConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RetrofitMethods.class);

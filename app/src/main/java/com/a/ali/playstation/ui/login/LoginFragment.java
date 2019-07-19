@@ -34,6 +34,13 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
+        if (getActivity().getSharedPreferences(
+                getString(R.string.user_shared_preferences_name), Context.MODE_PRIVATE
+        ).getString(getString(R.string.username_key), null) != null) {
+            Navigation.findNavController(getActivity(), R.id.navHostFragment)
+                    .navigate(R.id.action_login_to_console);
+        }
+
         View view = inflater.inflate(R.layout.fragment_login, parent, false);
 
         mContext = getContext();
@@ -63,8 +70,7 @@ public class LoginFragment extends Fragment {
 //                    }
 //                });
 
-                if (validateUserInfo()) {
-                } else {
+                if (!validateUserInfo()) {
                     mLogoAnimatable2Compat.stop();
                 }
             }
@@ -76,14 +82,30 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        isIPEntered();
+    }
+
+    private void isIPEntered() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.ip_shared_preference_name), Context.MODE_PRIVATE);
+        String ipAddress = sharedPreferences.getString(getString(R.string.ip_key), null);
+        if (ipAddress != null) {
+        } else {
+            Navigation.findNavController(getActivity(), R.id.navHostFragment)
+                    .navigate(R.id.action_login_to_Ip);
+        }
+    }
+
     private boolean validateUserInfo() {
+        mLogoAnimatable2Compat.start();
 
         Navigation.findNavController(getActivity(), R.id.navHostFragment)
                 .navigate(R.id.action_login_to_console);
 
         return false;
-
-//        mLogoAnimatable2Compat.start();
 //
 //        String userName = mUserNameTextInputLayout.getEditText().getText().toString();
 //        if (userName.isEmpty()) {
@@ -98,6 +120,7 @@ public class LoginFragment extends Fragment {
 //                return false;
 //            } else {
 //                mPasswordTextInputLayout.setError(null);
+//
 //                login(userName, password);
 //            }
 //        }
@@ -136,6 +159,5 @@ public class LoginFragment extends Fragment {
                     }
                     mLogoAnimatable2Compat.stop();
                 });
-
     }
 }

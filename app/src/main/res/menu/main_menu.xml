@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_reports"/>
 
     <item android:id="@+id/IpFragment"
-        android:title="@string/reports"
+        android:title="@string/set_ip_address"
         android:icon="@drawable/ic_settings"/>
 
     <item android:id="@+id/action_refresh"
