@@ -1,6 +1,7 @@
 package com.a.ali.playstation.data.repository;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.model.CafeOrders;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 import com.a.ali.playstation.data.network.networkUtil.AppNetworkConnectivityUtil;
@@ -55,14 +57,21 @@ public class AppNetworkRepository extends AppRepository {
                 mRetrofitMethods.loadConsoles());
     }
 
-    public LiveData<String> loadOrders(int roomId) {
-        return new RetrofitRequest<String>().enqueue(() ->
-                mRetrofitMethods.loadOrders(roomId));
+    public LiveData<List<CafeOrders>> loadOrders(String consoleCode) {
+        return new RetrofitRequest<List<CafeOrders>>().enqueue(() ->
+                mRetrofitMethods.loadOrders(consoleCode));
     }
 
-    public LiveData<String> loadReport(int selectedShiftPosition, int checkedReportTypeRadioButtonId,@NonNull Date reportDateFrom,@NonNull Date reportDateTo) {
+    public LiveData<String> loadReport(int selectedShiftPosition, int checkedReportTypeRadioButtonId, @NonNull Date reportDateFrom, @NonNull Date reportDateTo) {
         return new RetrofitRequest<String>().enqueue(() ->
-                mRetrofitMethods.loadReport(selectedShiftPosition,checkedReportTypeRadioButtonId,reportDateFrom, reportDateTo));
+                mRetrofitMethods.loadReport(selectedShiftPosition, checkedReportTypeRadioButtonId, reportDateFrom, reportDateTo));
+    }
+
+    public void resetIp(@NonNull String newIpAddress) {
+        ApiUrlConstants.IP_ADDRESS = newIpAddress;
+        mRetrofitMethods = new Retrofit.Builder().baseUrl(ApiUrlConstants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(RetrofitMethods.class);
     }
 
     private class RetrofitRequest<T> {

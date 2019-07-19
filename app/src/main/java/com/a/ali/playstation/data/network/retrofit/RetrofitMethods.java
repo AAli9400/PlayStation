@@ -2,6 +2,7 @@ package com.a.ali.playstation.data.network.retrofit;
 
 import androidx.annotation.NonNull;
 
+import com.a.ali.playstation.data.model.CafeOrders;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.network.api.ApiParameterConstants;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
@@ -21,8 +22,8 @@ public interface RetrofitMethods {
     @GET(ApiUrlConstants.LOAD_ROOMS_URL)
     Call<List<Console>> loadConsoles();
 
-    @GET(ApiUrlConstants.LOAD_ORDERS_URL)
-    Call<String> loadOrders(@Path(ApiParameterConstants.ROOM_ID_PARAMETER_NAME) int roomId);
+    @GET(ApiUrlConstants.LOAD_ORDERS_URL + "/{consoleCode}")
+    Call<List<CafeOrders>> loadOrders(@Path(ApiParameterConstants.CONSOLE_CODE_PARAMETER_NAME) String consoleCode);
 
     Call<String> loadReport(@Path(ApiParameterConstants.USERNAME_PARAMETER_NAME) int selectedShiftPosition,
                             @Path(ApiParameterConstants.USERNAME_PARAMETER_NAME) int checkedReportTypeRadioButtonId,

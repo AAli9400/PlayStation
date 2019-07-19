@@ -1,6 +1,7 @@
 package com.a.ali.playstation.ui.console;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,7 +48,7 @@ public class ConsoleFragment extends Fragment {
         mContext = getContext();
         mAppNetworkRepository = AppNetworkRepository.getInstance(getActivity().getApplication());
 
-       setupLoadingConsolesPeriodically();
+        setupLoadingConsolesPeriodically();
 
         mLoadingProgressBar = view.findViewById(R.id.progressBar);
 
@@ -61,7 +62,7 @@ public class ConsoleFragment extends Fragment {
         return view;
     }
 
-    private void setupLoadingConsolesPeriodically(){
+    private void setupLoadingConsolesPeriodically() {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -76,7 +77,8 @@ public class ConsoleFragment extends Fragment {
     }
 
     private void loadConsoles() {
-        mLoadingProgressBar.setVisibility(View.VISIBLE);
+        if (isIPEntered())
+            mLoadingProgressBar.setVisibility(View.VISIBLE);
 
         mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {
@@ -85,6 +87,18 @@ public class ConsoleFragment extends Fragment {
                     }
                     mLoadingProgressBar.setVisibility(View.GONE);
                 });
+    }
+
+    private boolean isIPEntered() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.ip_shared_preference_name), Context.MODE_PRIVATE);
+        String ipAddress = sharedPreferences.getString(getString(R.string.ip_key), null);
+        if (ipAddress != null) {
+            return true;
+        } else {
+            Navigation.findNavController(getActivity(), R.id.navHostFragment)
+                    .navigate(R.id.action_console_to_IP);
+            return false;
+        }
     }
 
     @Override
@@ -96,8 +110,12 @@ public class ConsoleFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         NavController navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
 
-        if (item.getItemId() == R.id.action_logout) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_logout) {
             return ((MainActivity) getActivity()).onSupportNavigateUp();
+        } else if (itemId == R.id.action_refresh) {
+            loadConsoles();
+            return true;
         }
 
         return NavigationUI.onNavDestinationSelected(item, navController)

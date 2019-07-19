@@ -33,7 +33,7 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
     private Fragment mOwnerFragment;
 
     /*
-    * [{"DepositCash":0,"dev_code":"ps01","single_multi":"multi","startTime":"18\/07\/2019 02:07:29 م","state":"playing"},{"DepositCash":0,"dev_code":"ps01","single_multi":"single","startTime":"18\/07\/2019 01:58:29 م","state":"finish transforming"},{"DepositCash":0,"dev_code":"ps02","single_multi":"single","startTime":"18\/05\/2019 05:39:57 م","state":"finish"},{"DepositCash":0,"dev_code":"ps03","single_multi":"multi","startTime":"18\/07\/2019 02:13:01 م","state":"playing"},{"DepositCash":0,"dev_code":"ps03","single_multi":"single","startTime":"18\/07\/2019 01:58:26 م","state":"finish transforming"},{"DepositCash":0,"dev_code":"ps04","single_multi":"single","startTime":"18\/07\/2019 01:58:23 م","state":"playing"},{"DepositCash":0,"dev_code":"ps05","single_multi":"multi","startTime":"18\/07\/2019 02:13:07 م","state":"playing"},{"DepositCash":0,"dev_code":"ps07","single_multi":"single","startTime":"12\/04\/2019 04:30:53 م","state":"finish"},{"DepositCash":0,"dev_code":"ps10","single_multi":"single","startTime":"18\/05\/2019 11:19:22 م","state":"finish"}]*/
+     * [{"DepositCash":0,"dev_code":"ps01","single_multi":"multi","startTime":"18\/07\/2019 02:07:29 م","state":"playing"},{"DepositCash":0,"dev_code":"ps01","single_multi":"single","startTime":"18\/07\/2019 01:58:29 م","state":"finish transforming"},{"DepositCash":0,"dev_code":"ps02","single_multi":"single","startTime":"18\/05\/2019 05:39:57 م","state":"finish"},{"DepositCash":0,"dev_code":"ps03","single_multi":"multi","startTime":"18\/07\/2019 02:13:01 م","state":"playing"},{"DepositCash":0,"dev_code":"ps03","single_multi":"single","startTime":"18\/07\/2019 01:58:26 م","state":"finish transforming"},{"DepositCash":0,"dev_code":"ps04","single_multi":"single","startTime":"18\/07\/2019 01:58:23 م","state":"playing"},{"DepositCash":0,"dev_code":"ps05","single_multi":"multi","startTime":"18\/07\/2019 02:13:07 م","state":"playing"},{"DepositCash":0,"dev_code":"ps07","single_multi":"single","startTime":"12\/04\/2019 04:30:53 م","state":"finish"},{"DepositCash":0,"dev_code":"ps10","single_multi":"single","startTime":"18\/05\/2019 11:19:22 م","state":"finish"}]*/
 
     private List<Console> mConsoles = null;
 
@@ -84,20 +84,25 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
         holder.moneyTextView.setText(console.getDepositCash());
 
 
-        holder.ordersButton.setOnClickListener(view -> showOrdersDialog(position));
+        holder.ordersButton.setOnClickListener(view -> showOrdersDialog(console.getDev_code()));
     }
 
-    private void showOrdersDialog(int position) {
-        AppDialog.show(mContext, R.layout.orders_dialog, (view, dialog) -> {
+    private void showOrdersDialog(String consoleCode) {
+        AppDialog.show(mContext, R.layout.cafe_orders_dialog, (view, dialog) -> {
             RecyclerView ordersRecyclerView = view.findViewById(R.id.recyclerview);
-            ordersRecyclerView.setAdapter(new OrderAdapter());
 
-//            mAppNetworkRepository.loadOrders(position/*TODO: RoomID*/).observe(
-//                    mOwnerFragment, response -> {
-//                        if (response != null) {
-//                            //TODO:
-//                        }
-//                    });
+            OrderAdapter orderAdapter = new OrderAdapter();
+            ordersRecyclerView.setAdapter(orderAdapter);
+
+            mAppNetworkRepository.loadOrders(consoleCode).observe(
+                    mOwnerFragment, response -> {
+                        if (response != null) {
+                            double price = orderAdapter.swapData(response);
+
+                        } else {
+                            dialog.dismiss();
+                        }
+                    });
         });
     }
 

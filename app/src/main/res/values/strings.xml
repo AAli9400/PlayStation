@@ -17,4 +17,15 @@
     <string name="password_required">Password Required.</string>
     <string name="date_from_required">Date From Is Required.</string>
     <string name="date_to_required">Date To Is Required.</string>
+    <string name="categories">Categories</string>
+    <string name="price">Price</string>
+    <string name="amount">Amount</string>
+    <string name="refresh">Refresh</string>
+
+    <string name="save">Save</string>
+    <string name="ip_address">IP Address</string>
+    <string name="empty_ip_address_error">IP Address Can\'t Be Empty.</string>
+    <string name="saved">Saved</string>
+    <string name="ip_key" translatable="false">IP_KEY</string>
+    <string name="ip_shared_preference_name" translatable="false">IP</string>
 </resources>

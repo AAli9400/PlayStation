@@ -16,4 +16,12 @@
     <string name="password_required">كلمة المرور مطلوبة.</string>
     <string name="date_from_required">تاريخ البداية مطلوب.</string>
     <string name="date_to_required">تاريخ النهاية مطلوب.</string>
+    <string name="categories">الأصناف</string>
+    <string name="price">السعر</string>
+    <string name="refresh">تحديث</string>
+    <string name="save">حفظ</string>
+    <string name="ip_address">IP Address</string>
+    <string name="empty_ip_address_error">IP Address Can\'t Be Empty.</string>
+    <string name="saved">تم الحفظ</string>
+    <string name="amount">الكمية</string>
 </resources>

@@ -56,7 +56,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Amount" />
+            android:text="@string/amount" />
 
         <TextView
             android:id="@+id/tv_category"
@@ -66,9 +66,21 @@
             android:layout_margin="4dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center"
-            android:text="Categories" />
+            android:text="@string/categories" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/SmallHeadLineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/price" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -86,7 +98,7 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="10"
-            tools:listitem="@layout/orders_list_item">
+            tools:listitem="@layout/cafe_orders_list_item">
 
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.core.widget.NestedScrollView>
