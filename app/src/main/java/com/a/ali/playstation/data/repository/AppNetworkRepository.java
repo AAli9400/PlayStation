@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.CafeOrders;
 import com.a.ali.playstation.data.model.Console;
+import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 import com.a.ali.playstation.data.network.networkUtil.AppNetworkConnectivityUtil;
 import com.a.ali.playstation.data.network.retrofit.RetrofitCall;
@@ -47,9 +48,9 @@ public class AppNetworkRepository extends AppRepository {
                 .build().create(RetrofitMethods.class);
     }
 
-    public LiveData<String> login(@NonNull String userName, @NonNull String password) {
-        return new RetrofitRequest<String>().enqueue(() ->
-                mRetrofitMethods.login(userName, password));
+    public LiveData<List<User>> getAllUsers() {
+        return new RetrofitRequest<List<User>>().enqueue(() ->
+                mRetrofitMethods.getAllUsers());
     }
 
     public LiveData<List<Console>> loadConsoles() {

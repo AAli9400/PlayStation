@@ -2,6 +2,7 @@ package com.a.ali.playstation.ui.login;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -104,20 +106,36 @@ public class LoginFragment extends Fragment {
     }
 
     private void login(@NonNull String userName, @NonNull String password) {
-//        mAppNetworkRepository.login(userName, password)
-//                .observe(this, response -> {
-//                    if (response != null) {
-//                        //TODO:
-//                    }
-//                    mLogoAnimatable2Compat.stop();
-//                    Navigation.findNavController(getActivity(), R.id.navHostFragment)
-//                            .navigate(R.id.action_login_to_home);
-//                });
-//
-//        new Handler().postDelayed(() -> {
-//            mLogoAnimatable2Compat.stop();
-//            Navigation.findNavController(getActivity(), R.id.navHostFragment)
-//                    .navigate(R.id.action_login_to_home);
-//        }, 500);
+        mAppNetworkRepository.getAllUsers()
+                .observe(this, response -> {
+                    if (response != null) {
+                        for (User user : response) {
+                            if (user.getUserN().equals(userName)) {
+                                mUserNameTextInputLayout.setError(null);
+                                if (user.getPW().equals(password)) {
+                                    mPasswordTextInputLayout.setError(null);
+
+                                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
+                                            getString(R.string.user_shared_preferences_name), Context.MODE_PRIVATE
+                                    );
+
+                                    sharedPreferences.edit()
+                                            .putString(getString(R.string.username_key), userName)
+                                            .putString(getString(R.string.user_title_key), user.getUserTitle())
+                                            .apply();
+
+                                    Navigation.findNavController(getActivity(), R.id.navHostFragment)
+                                            .navigate(R.id.action_login_to_console);
+                                } else {
+                                    mPasswordTextInputLayout.setError(getString(R.string.wrong_password));
+                                }
+                            } else {
+                                mUserNameTextInputLayout.setError(getString(R.string.username_not_found));
+                            }
+                        }
+                    }
+                    mLogoAnimatable2Compat.stop();
+                });
+
     }
 }

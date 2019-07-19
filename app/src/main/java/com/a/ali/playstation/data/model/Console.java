@@ -2,6 +2,7 @@ package com.a.ali.playstation.data.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -16,6 +17,15 @@ public class Console {
     private String state;
 
     private String DepositCash;
+
+    @Ignore
+    public static final String CONSOLE_STATUS_FINISH = "finish";
+    @Ignore
+    public static final String CONSOLE_STATUS_PLAYING = "playing";
+    @Ignore
+    public static final String CONSOLE_STATUS_SINGLE = "single";
+    @Ignore
+    public static final String CONSOLE_STATUS_MULTI = "multi";
 
     public Console() {
     }

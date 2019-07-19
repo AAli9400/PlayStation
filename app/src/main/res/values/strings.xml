@@ -28,4 +28,9 @@
     <string name="saved">Saved</string>
     <string name="ip_key" translatable="false">IP_KEY</string>
     <string name="ip_shared_preference_name" translatable="false">IP</string>
+    <string name="wrong_password">Wrong Password.</string>
+    <string name="username_not_found">Username Not Found.</string>
+    <string name="user_shared_preferences_name" translatable="false">user</string>
+    <string name="username_key" translatable="false">username_key</string>
+    <string name="user_title_key" translatable="false">userTitle_key</string>
 </resources>

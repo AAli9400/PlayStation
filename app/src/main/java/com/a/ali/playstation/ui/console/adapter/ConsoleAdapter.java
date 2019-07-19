@@ -22,10 +22,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.a.ali.playstation.data.network.api.ApiResponseConstants.CONSOLE_STATUS_FINISH;
-import static com.a.ali.playstation.data.network.api.ApiResponseConstants.CONSOLE_STATUS_MULTI;
-import static com.a.ali.playstation.data.network.api.ApiResponseConstants.CONSOLE_STATUS_PLAYING;
-import static com.a.ali.playstation.data.network.api.ApiResponseConstants.CONSOLE_STATUS_SINGLE;
+import static com.a.ali.playstation.data.model.Console.*;
 
 public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHolder> {
     private Context mContext;

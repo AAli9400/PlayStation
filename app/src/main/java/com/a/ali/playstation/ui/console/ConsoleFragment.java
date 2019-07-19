@@ -25,6 +25,8 @@ import androidx.work.WorkManager;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.database.util.ConsoleLogWorkerManager;
+import com.a.ali.playstation.data.model.User;
+import com.a.ali.playstation.data.repository.AppDatabaseRepository;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.MainActivity;
 import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
@@ -41,6 +43,7 @@ public class ConsoleFragment extends Fragment {
     private ConsoleAdapter mConsoleAdapter;
 
     private AppNetworkRepository mAppNetworkRepository;
+    private AppDatabaseRepository mAppDatabaseRepository;
     private Context mContext;
 
     @Override
@@ -51,6 +54,7 @@ public class ConsoleFragment extends Fragment {
 
         mContext = getContext();
         mAppNetworkRepository = AppNetworkRepository.getInstance(getActivity().getApplication());
+        mAppDatabaseRepository = AppDatabaseRepository.getInstance(getActivity().getApplication());
 
         setupLoadingConsolesPeriodically();
 
@@ -110,6 +114,12 @@ public class ConsoleFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
+        String userTitle = getActivity().getSharedPreferences(getString(R.string.user_shared_preferences_name), Context.MODE_PRIVATE)
+                .getString(getString(R.string.user_title_key), null);
+
+        if (userTitle != null && userTitle.equals(User.TITLE_SHIFT)) {
+            menu.getItem(R.id.reportsFragment).setVisible(false);
+        }
     }
 
     @Override
@@ -118,6 +128,16 @@ public class ConsoleFragment extends Fragment {
 
         int itemId = item.getItemId();
         if (itemId == R.id.action_logout) {
+            getActivity().getSharedPreferences(getString(R.string.user_shared_preferences_name), Context.MODE_PRIVATE)
+                    .edit().clear().apply();
+
+//            getActivity().getSharedPreferences(getString(R.string.ip_shared_preference_name), Context.MODE_PRIVATE)
+//                    .edit().clear().apply();
+
+//            mAppDatabaseRepository.deleteAllConsolesData();
+
+            WorkManager.getInstance(mContext).cancelAllWork();
+
             return ((MainActivity) getActivity()).onSupportNavigateUp();
         } else if (itemId == R.id.action_refresh) {
             loadConsoles();
@@ -126,6 +146,5 @@ public class ConsoleFragment extends Fragment {
 
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
-
     }
 }

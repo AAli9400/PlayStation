@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.a.ali.playstation.data.model.CafeOrders;
 import com.a.ali.playstation.data.model.Console;
+import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.network.api.ApiParameterConstants;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 
@@ -16,8 +17,7 @@ import retrofit2.http.GET;
 
 public interface RetrofitMethods {
     @GET(ApiUrlConstants.LOGIN_URL)
-    Call<String> login(@Path(ApiParameterConstants.USERNAME_PARAMETER_NAME) String userName,
-                       @Path(ApiParameterConstants.PASSWORD_PARAMETER_NAME) String password);
+    Call<List<User>> getAllUsers();
 
     @GET(ApiUrlConstants.LOAD_ROOMS_URL)
     Call<List<Console>> loadConsoles();

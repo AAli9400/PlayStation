@@ -24,4 +24,6 @@
     <string name="empty_ip_address_error">IP Address Can\'t Be Empty.</string>
     <string name="saved">تم الحفظ</string>
     <string name="amount">الكمية</string>
+    <string name="wrong_password">Wrong Password.</string>
+    <string name="username_not_found">Username Not Found.</string>
 </resources>
