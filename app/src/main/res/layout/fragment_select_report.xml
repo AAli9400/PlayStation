@@ -167,4 +167,7 @@
         app:layout_constraintEnd_toEndOf="@+id/til_to_date"
         app:layout_constraintStart_toStartOf="@+id/til_to_date"
         app:layout_constraintTop_toTopOf="@+id/til_to_date" />
+
+
+    <include layout="@layout/loading_view"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

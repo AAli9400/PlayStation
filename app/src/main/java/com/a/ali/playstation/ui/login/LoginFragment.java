@@ -49,7 +49,6 @@ public class LoginFragment extends Fragment {
         AnimatedVectorDrawableCompat drawableCompat = AnimatedVectorDrawableCompat.create(mContext, R.drawable.avd_controller_animator);
         imageView.setImageDrawable(drawableCompat);
 
-
         mLoginButton = view.findViewById(R.id.mbtn_login);
 
         mLogoAnimatable2Compat = drawableCompat;

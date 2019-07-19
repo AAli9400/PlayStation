@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import androidx.navigation.Navigation;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
+import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,6 +27,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SelectReportFragment extends Fragment {
+    private ImageView mLoadingImageView;
+    private AppLoadingViewUtil mLoadingViewUtil;
+
     private Date mReportDateFrom, mReportDateTo;
     private Calendar mReportCalenderFrom, mReportCalenderTo;
 
@@ -44,6 +49,10 @@ public class SelectReportFragment extends Fragment {
 
         mShiftSpinner = view.findViewById(R.id.s_shift);
         mReportTypeRadioGroup = view.findViewById(R.id.rg_report_type);
+
+        mLoadingImageView = view.findViewById(R.id.iv_loading);
+        mLoadingViewUtil = new AppLoadingViewUtil(mContext, mLoadingImageView);
+        mLoadingImageView.setImageDrawable(mLoadingViewUtil.getDrawable());
 
         setupReportDates(view);
 
@@ -136,6 +145,8 @@ public class SelectReportFragment extends Fragment {
         } else if (mReportDateTo == null) {
             Toast.makeText(mContext, getString(R.string.date_to_required), Toast.LENGTH_LONG).show();
         } else {
+            mLoadingViewUtil.show();
+
             mAppNetworkRepository.loadReport(selectedShiftPosition, checkedReportTypeRadioButtonId, mReportDateTo, mReportDateTo)
                     .observe(this, response -> {
                         if (response != null) {
@@ -143,6 +154,8 @@ public class SelectReportFragment extends Fragment {
                             Navigation.findNavController(getActivity(), R.id.navHostFragment)
                                     .navigate(R.id.action_selectReport_to_reports);
                         }
+
+                        mLoadingViewUtil.hide();
                     });
         }
     }

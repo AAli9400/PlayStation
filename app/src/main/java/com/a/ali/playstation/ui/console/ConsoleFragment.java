@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
@@ -27,12 +28,15 @@ import com.a.ali.playstation.data.database.util.ConsoleLogWorkerManager;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.MainActivity;
 import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
+import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 
 import java.util.concurrent.TimeUnit;
 
 public class ConsoleFragment extends Fragment {
     private RecyclerView mRoomsRecyclerView;
-    private ProgressBar mLoadingProgressBar;
+
+    private ImageView mLoadingImageView;
+    private AppLoadingViewUtil mLoadingViewUtil;
 
     private ConsoleAdapter mConsoleAdapter;
 
@@ -50,7 +54,9 @@ public class ConsoleFragment extends Fragment {
 
         setupLoadingConsolesPeriodically();
 
-        mLoadingProgressBar = view.findViewById(R.id.progressBar);
+        mLoadingImageView = view.findViewById(R.id.iv_loading);
+        mLoadingViewUtil = new AppLoadingViewUtil(mContext, mLoadingImageView);
+        mLoadingImageView.setImageDrawable(mLoadingViewUtil.getDrawable());
 
         mRoomsRecyclerView = view.findViewById(R.id.recyclerview);
 
@@ -78,14 +84,14 @@ public class ConsoleFragment extends Fragment {
 
     private void loadConsoles() {
         if (isIPEntered())
-            mLoadingProgressBar.setVisibility(View.VISIBLE);
+            mLoadingViewUtil.show();
 
         mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {
                     if (response != null) {
                         mConsoleAdapter.swapData(response);
                     }
-                    mLoadingProgressBar.setVisibility(View.GONE);
+                    mLoadingViewUtil.hide();
                 });
     }
 
