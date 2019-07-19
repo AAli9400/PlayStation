@@ -19,6 +19,8 @@ public class ReportsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reports, container, false);
 
+
+
         mLoadingProgressBar = view.findViewById(R.id.progressBar);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
         //TODO: Load data

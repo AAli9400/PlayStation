@@ -45,7 +45,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:2.0.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.0.0"
     
-    //Console Database
+    //Room Database
     implementation "androidx.room:room-runtime:2.1.0"
     annotationProcessor "androidx.room:room-compiler:2.1.0"
+
+    //WorkerManager
+    // (Java only)
+    implementation "androidx.work:work-runtime:2.1.0"
 }

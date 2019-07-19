@@ -16,11 +16,18 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.database.util.ConsoleLogWorkerManager;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.MainActivity;
 import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
+
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleFragment extends Fragment {
     private RecyclerView mRoomsRecyclerView;
@@ -40,6 +47,8 @@ public class ConsoleFragment extends Fragment {
         mContext = getContext();
         mAppNetworkRepository = AppNetworkRepository.getInstance(getActivity().getApplication());
 
+       setupLoadingConsolesPeriodically();
+
         mLoadingProgressBar = view.findViewById(R.id.progressBar);
 
         mRoomsRecyclerView = view.findViewById(R.id.recyclerview);
@@ -47,15 +56,29 @@ public class ConsoleFragment extends Fragment {
         mConsoleAdapter = new ConsoleAdapter(mContext, mAppNetworkRepository, this);
         mRoomsRecyclerView.setAdapter(mConsoleAdapter);
 
-        loadRooms();
+        loadConsoles();
 
         return view;
     }
 
-    private void loadRooms() {
+    private void setupLoadingConsolesPeriodically(){
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(
+                ConsoleLogWorkerManager.class, 15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build();
+
+        WorkManager.getInstance(mContext).enqueue(workRequest);
+
+    }
+
+    private void loadConsoles() {
         mLoadingProgressBar.setVisibility(View.VISIBLE);
 
-        mAppNetworkRepository.loadRooms()
+        mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {
                     if (response != null) {
                         mConsoleAdapter.swapData(response);

@@ -1,4 +1,4 @@
-package com.a.ali.playstation.data.network.networkUtil;
+package com.a.ali.playstation.util;
 
 import android.os.Handler;
 import android.os.Looper;

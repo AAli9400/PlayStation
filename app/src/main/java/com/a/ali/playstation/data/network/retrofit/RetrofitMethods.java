@@ -19,7 +19,7 @@ public interface RetrofitMethods {
                        @Path(ApiParameterConstants.PASSWORD_PARAMETER_NAME) String password);
 
     @GET(ApiUrlConstants.LOAD_ROOMS_URL)
-    Call<List<Console>> loadRooms();
+    Call<List<Console>> loadConsoles();
 
     @GET(ApiUrlConstants.LOAD_ORDERS_URL)
     Call<String> loadOrders(@Path(ApiParameterConstants.ROOM_ID_PARAMETER_NAME) int roomId);

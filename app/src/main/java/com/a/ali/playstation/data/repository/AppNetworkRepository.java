@@ -29,7 +29,7 @@ public class AppNetworkRepository extends AppRepository {
 
     private static AppNetworkRepository mInstance = null;
 
-    public static AppNetworkRepository getInstance(Application mApplication) {
+    public static synchronized AppNetworkRepository getInstance(Application mApplication) {
         if (mInstance == null) {
             mInstance = new AppNetworkRepository(mApplication);
         }
@@ -50,9 +50,9 @@ public class AppNetworkRepository extends AppRepository {
                 mRetrofitMethods.login(userName, password));
     }
 
-    public LiveData<List<Console>> loadRooms() {
+    public LiveData<List<Console>> loadConsoles() {
         return new RetrofitRequest<List<Console>>().enqueue(() ->
-                mRetrofitMethods.loadRooms());
+                mRetrofitMethods.loadConsoles());
     }
 
     public LiveData<String> loadOrders(int roomId) {

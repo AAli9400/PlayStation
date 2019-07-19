@@ -1,10 +1,20 @@
 package com.a.ali.playstation.data.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Console {
     private String dev_code;
+
+    @NonNull
+    @PrimaryKey
     private String startTime;
+
     private String single_multi;
     private String state;
+
     private String DepositCash;
 
     public Console() {
