@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -79,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(mNavController, mAppBarConfiguration);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        NavDestination navController = mNavController.getCurrentDestination();
-
-        if (navController != null && navController.getId() == R.id.consoleFragment) {
-            this.finish();
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        NavDestination navController = mNavController.getCurrentDestination();
+//
+//        if (navController != null && navController.getId() == R.id.loginFragment) {
+//            this.finish();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 }
