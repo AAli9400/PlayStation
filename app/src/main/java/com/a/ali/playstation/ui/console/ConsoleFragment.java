@@ -89,6 +89,7 @@ public class ConsoleFragment extends Fragment {
 
     private void loadConsoles() {
         mLoadingViewUtil.show();
+        mEmptyView.setVisibility(View.GONE);
 
         mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {

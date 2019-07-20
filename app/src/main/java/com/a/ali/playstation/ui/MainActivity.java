@@ -51,12 +51,17 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.selectReportFragment:
-//                        actionBar.setDisplayHomeAsUpEnabled(true);
+                        actionBar.setDisplayHomeAsUpEnabled(true);
                         mIsCurrentFragmentReport = true;
                         break;
 
-                    case R.id.til_ip_address:
-//                        actionBar.setDisplayHomeAsUpEnabled(true);
+                    case R.id.IpFragment:
+                        actionBar.setDisplayHomeAsUpEnabled(true);
+                        mIsCurrentFragmentReport = false;
+                        break;
+
+                    case R.id.logFragment:
+                        actionBar.setDisplayHomeAsUpEnabled(true);
                         mIsCurrentFragmentReport = false;
                         break;
                 }
