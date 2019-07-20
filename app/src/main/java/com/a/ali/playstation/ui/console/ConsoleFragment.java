@@ -66,7 +66,7 @@ public class ConsoleFragment extends Fragment {
 
         mConsolessRecyclerView = view.findViewById(R.id.recyclerview);
 
-        mConsoleAdapter = new ConsoleAdapter(mContext, mAppNetworkRepository, this);
+        mConsoleAdapter = new ConsoleAdapter(mContext, mAppNetworkRepository, this, false, null);
         mConsolessRecyclerView.setAdapter(mConsoleAdapter);
 
         loadConsoles();

@@ -14,8 +14,9 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_refresh"/>
 
-    <item android:id="@+id/logFragment"
-        android:title="@string/log" />
+    <item
+        android:id="@+id/logFragment"
+        android:title="@string/last_actions" />
 
     <item android:id="@+id/action_logout"
         android:title="@string/logout"

@@ -1,4 +1,4 @@
-package com.a.ali.playstation.ui;
+package com.a.ali.playstation.ui.log;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +34,11 @@ public class LogFragment extends Fragment {
 
         mConsolessRecyclerView = view.findViewById(R.id.recyclerview);
 
-        mConsoleAdapter = new ConsoleAdapter(getContext(), AppNetworkRepository.getInstance(getActivity().getApplication()), this);
+        mConsoleAdapter = new ConsoleAdapter(getContext(),
+                AppNetworkRepository.getInstance(getActivity().getApplication()),
+                this, true,
+                AppDatabaseRepository.getInstance(getActivity().getApplication())
+                );
         mConsolessRecyclerView.setAdapter(mConsoleAdapter);
 
         loadData();

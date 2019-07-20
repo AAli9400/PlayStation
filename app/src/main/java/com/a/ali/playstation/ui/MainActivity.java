@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         NavHostFragment host = (NavHostFragment)
@@ -83,10 +85,14 @@ public class MainActivity extends AppCompatActivity {
 //        super.onBackPressed();
 //        NavDestination navController = mNavController.getCurrentDestination();
 //
-//        if (navController != null && navController.getId() == R.id.loginFragment) {
+//        if (navController != null && navController.getId() == R.id.consoleFragment) {
 //            this.finish();
 //        } else {
 //            super.onBackPressed();
 //        }
 //    }
+
+    public void navigateToLogin() {
+        mNavController.navigate(R.id.consoleFragment);
+    }
 }

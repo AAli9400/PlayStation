@@ -3,11 +3,14 @@ package com.a.ali.playstation.data.database.util;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.a.ali.playstation.data.model.CafeOrder;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 import com.a.ali.playstation.data.network.retrofit.RetrofitMethods;
 import com.a.ali.playstation.data.repository.AppDatabaseRepository;
+import com.a.ali.playstation.util.AppExecutors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,9 +40,47 @@ public class ConsoleLogService extends IntentService {
                 List<Console> consoles = response.body();
                 if (consoles != null && consoles.size() > 0) {
                     databaseRepository.deleteAllConsolesData();
-                    databaseRepository.insertConsoles(consoles);
-                }
+                    databaseRepository.deleteAllCafeOrders();
 
+                    databaseRepository.insertConsoles(consoles);
+
+                    AppExecutors.getInstance().executeOnDiskIOThread(() -> {
+
+
+                        List<Console> addedConsoles = databaseRepository.selectAllConsoles();
+
+                        for (int i = 0; i < addedConsoles.size(); i++) {
+                            Console console = addedConsoles.get(i);
+
+                            retrofitMethods.loadOrders(console.getDev_code())
+                                    .enqueue(new Callback<List<CafeOrder>>() {
+                                        @Override
+                                        public void onResponse(Call<List<CafeOrder>> call, Response<List<CafeOrder>> response) {
+                                            if (response.body() != null) {
+                                                ArrayList<CafeOrder> ordersList = (ArrayList<CafeOrder>) response.body();
+
+                                                AppExecutors.getInstance().executeOnDiskIOThread(() -> {
+                                                    for (CafeOrder orders : ordersList) {
+                                                    ordersList.remove(orders);
+                                                    orders.setConsoleId(console.getId());
+                                                    ordersList.add(orders);
+                                                }
+
+                                                databaseRepository.insertAllCafeOrders(ordersList);
+                                                });
+//
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<List<CafeOrder>> call, Throwable t) {
+                                            //ignore
+                                        }
+                                    });
+
+                        }
+                    });
+                }
                 //else do nothing
             }
 

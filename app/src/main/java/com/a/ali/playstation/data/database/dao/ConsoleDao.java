@@ -34,4 +34,7 @@ public interface ConsoleDao {
 
     @Query("DELETE FROM Console")
     void deleteAll();
+
+    @Query("SELECT id FROM Console WHERE dev_code = :dev_code")
+    LiveData<Integer> getId(String dev_code);
 }

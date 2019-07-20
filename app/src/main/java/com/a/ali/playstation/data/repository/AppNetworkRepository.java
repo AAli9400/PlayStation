@@ -10,7 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.a.ali.playstation.R;
-import com.a.ali.playstation.data.model.CafeOrders;
+import com.a.ali.playstation.data.model.CafeOrder;
 import com.a.ali.playstation.data.model.CafeReport;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.model.PlayReport;
@@ -66,8 +66,8 @@ public class AppNetworkRepository extends AppRepository {
                 mRetrofitMethods.loadConsoles());
     }
 
-    public LiveData<List<CafeOrders>> loadOrders(String consoleCode) {
-        return new RetrofitRequest<List<CafeOrders>>().enqueue(() ->
+    public LiveData<List<CafeOrder>> loadOrders(String consoleCode) {
+        return new RetrofitRequest<List<CafeOrder>>().enqueue(() ->
                 mRetrofitMethods.loadOrders(consoleCode));
     }
 
@@ -94,7 +94,8 @@ public class AppNetworkRepository extends AppRepository {
                         endDate, endHour, endMinute, am_pm_end));
     }
 
-    public LiveData<List<CafeReport>> cafeReport(@NonNull String shiftName,
+    public LiveData<List<CafeReport>> cafeReport(@NonNull String cafeType,
+                                                 @NonNull String shiftName,
                                                  @NonNull String startDate,
                                                  @NonNull String startHour,
                                                  @NonNull String startMinute,
@@ -104,7 +105,7 @@ public class AppNetworkRepository extends AppRepository {
                                                  @NonNull String endMinute,
                                                  @NonNull String am_pm_end) {
         return new RetrofitRequest<List<CafeReport>>().enqueue(() ->
-                mRetrofitMethods.cafeReport(shiftName,
+                mRetrofitMethods.cafeReport(cafeType, shiftName,
                         startDate, startHour, startMinute, am_pm_start,
                         endDate, endHour, endMinute, am_pm_end));
     }

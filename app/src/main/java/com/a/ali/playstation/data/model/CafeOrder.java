@@ -1,17 +1,34 @@
 package com.a.ali.playstation.data.model;
 
-public class CafeOrders {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class CafeOrder {
+    private int consoleId;
+    @PrimaryKey
+    @NonNull
     private String CItem;
     private String ItemPrice;
     private String ItemQT;
 
-    public CafeOrders() {
+    public CafeOrder() {
     }
 
-    public CafeOrders(String CItem, String itemPrice, String itemQT) {
+    public CafeOrder(int consoleId, String CItem, String itemPrice, String itemQT) {
+        this.consoleId = consoleId;
         this.CItem = CItem;
         ItemPrice = itemPrice;
         ItemQT = itemQT;
+    }
+
+    public int getConsoleId() {
+        return consoleId;
+    }
+
+    public void setConsoleId(int consoleId) {
+        this.consoleId = consoleId;
     }
 
     public String getCItem() {

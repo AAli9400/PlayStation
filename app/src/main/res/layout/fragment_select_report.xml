@@ -8,7 +8,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_report_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="59dp">
 
         <TextView
             android:id="@+id/textView8"
@@ -75,6 +77,29 @@
                 android:text="Cafe" />
         </RadioGroup>
 
+        <Spinner
+            android:id="@+id/s_cafe_type"
+            style="@style/Spinner"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/rg_report_type"
+            app:layout_constraintStart_toStartOf="@+id/rg_report_type"
+            app:layout_constraintTop_toBottomOf="@+id/rg_report_type" />
+
+        <ImageView
+            android:id="@+id/iv_open_spinner2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/s_cafe_type"
+            app:layout_constraintEnd_toEndOf="@+id/s_cafe_type"
+            app:layout_constraintTop_toTopOf="@+id/s_cafe_type"
+            app:srcCompat="@drawable/ic_spinner_arrow_down" />
+
+
         <TextView
             android:id="@+id/textView"
             style="@style/SmallHeadLineTextView"
@@ -114,7 +139,7 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/barrier2"
-            app:layout_constraintTop_toBottomOf="@+id/rg_report_type">
+            app:layout_constraintTop_toBottomOf="@+id/s_cafe_type">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -160,6 +185,7 @@
             android:id="@+id/view_from_date"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/til_from_date"
             app:layout_constraintEnd_toEndOf="@+id/til_from_date"
             app:layout_constraintStart_toStartOf="@+id/til_from_date"
@@ -178,9 +204,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="0dp"
         android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,9 +214,9 @@
 
     <include
         layout="@layout/loading_view"
-        tools:visibility="invisible" />
+        tools:visibility="gone" />
 
     <include
         layout="@layout/empty_view"
-        tools:visibility="invisible" />
+        tools:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

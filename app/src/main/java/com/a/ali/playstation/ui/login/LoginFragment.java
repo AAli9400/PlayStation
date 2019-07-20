@@ -3,6 +3,7 @@ package com.a.ali.playstation.ui.login;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
+import com.a.ali.playstation.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -37,8 +39,7 @@ public class LoginFragment extends Fragment {
         if (getActivity().getSharedPreferences(
                 getString(R.string.user_shared_preferences_name), Context.MODE_PRIVATE
         ).getString(getString(R.string.username_key), null) != null) {
-            Navigation.findNavController(getActivity(), R.id.navHostFragment)
-                    .navigate(R.id.action_login_to_console);
+            ((MainActivity) getActivity()).navigateToLogin();
         }
 
         View view = inflater.inflate(R.layout.fragment_login, parent, false);
@@ -63,16 +64,14 @@ public class LoginFragment extends Fragment {
         mLogoAnimatable2Compat = drawableCompat;
         mLoginButton.setOnClickListener(view1 -> {
             if (mLogoAnimatable2Compat != null) {
-//                mLogoAnimatable2Compat.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-//                    @Override
-//                    public void onAnimationEnd(Drawable drawable) {
-//                        mLogoAnimatable2Compat.start();
-//                    }
-//                });
+                mLogoAnimatable2Compat.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+                    @Override
+                    public void onAnimationEnd(Drawable drawable) {
+                        mLogoAnimatable2Compat.start();
+                    }
+                });
 
-                if (!validateUserInfo()) {
-                    mLogoAnimatable2Compat.stop();
-                }
+                validateUserInfo();
             }
         });
 
@@ -102,39 +101,39 @@ public class LoginFragment extends Fragment {
     private boolean validateUserInfo() {
         mLogoAnimatable2Compat.start();
 
-        Navigation.findNavController(getActivity(), R.id.navHostFragment)
-                .navigate(R.id.action_login_to_console);
+        String userName = mUserNameTextInputLayout.getEditText().getText().toString();
+        if (userName.isEmpty()) {
+            mUserNameTextInputLayout.setError(getString(R.string.username_required));
+            mLogoAnimatable2Compat.stop();
+            return false;
+        } else {
+            mUserNameTextInputLayout.setError(null);
 
-        return false;
-//
-//        String userName = mUserNameTextInputLayout.getEditText().getText().toString();
-//        if (userName.isEmpty()) {
-//            mUserNameTextInputLayout.setError(getString(R.string.username_required));
-//            return false;
-//        } else {
-//            mUserNameTextInputLayout.setError(null);
-//
-//            String password = mPasswordTextInputLayout.getEditText().getText().toString();
-//            if (password.isEmpty()) {
-//                mPasswordTextInputLayout.setError(getString(R.string.password_required));
-//                return false;
-//            } else {
-//                mPasswordTextInputLayout.setError(null);
-//
-//                login(userName, password);
-//            }
-//        }
-//
-//        return true;
+            String password = mPasswordTextInputLayout.getEditText().getText().toString();
+            if (password.isEmpty()) {
+                mPasswordTextInputLayout.setError(getString(R.string.password_required));
+                mLogoAnimatable2Compat.stop();
+
+                return false;
+            } else {
+                mPasswordTextInputLayout.setError(null);
+
+                login(userName, password);
+            }
+        }
+
+        return true;
     }
 
     private void login(@NonNull String userName, @NonNull String password) {
         mAppNetworkRepository.getAllUsers()
                 .observe(this, response -> {
                     if (response != null) {
+                        boolean isUserExists = false;
                         for (User user : response) {
                             if (user.getUserN().equals(userName)) {
                                 mUserNameTextInputLayout.setError(null);
+                                isUserExists = true;
                                 if (user.getPW().equals(password)) {
                                     mPasswordTextInputLayout.setError(null);
 
@@ -147,16 +146,17 @@ public class LoginFragment extends Fragment {
                                             .putString(getString(R.string.user_title_key), user.getUserTitle())
                                             .apply();
 
-                                    Navigation.findNavController(getActivity(), R.id.navHostFragment)
-                                            .navigate(R.id.action_login_to_console);
+                                    ((MainActivity) getActivity()).navigateToLogin();
                                 } else {
                                     mPasswordTextInputLayout.setError(getString(R.string.wrong_password));
                                 }
-                            } else {
-                                mUserNameTextInputLayout.setError(getString(R.string.username_not_found));
                             }
                         }
+                        if (!isUserExists) {
+                            mUserNameTextInputLayout.setError(getString(R.string.username_not_found));
+                        }
                     }
+
                     mLogoAnimatable2Compat.stop();
                 });
     }

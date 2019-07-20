@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/background_accent_color_oval"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/ic_close" />
 
     <TextView
-        android:id="@+id/tv_money"
+        android:id="@+id/tv_console_name"
         style="@style/BigHeadLineTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -121,8 +121,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/total"
-        app:layout_constraintStart_toStartOf="@+id/tv_money"
-        app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+        app:layout_constraintStart_toStartOf="@+id/tv_console_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_console_name" />
 
     <TextView
         android:id="@+id/tv_total_cafe_order"
@@ -133,6 +133,6 @@
         android:layout_marginTop="8dp"
         android:text="0"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_console_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

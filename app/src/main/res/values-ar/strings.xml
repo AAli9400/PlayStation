@@ -34,4 +34,6 @@
     <string name="no_data_to_display">لا توجد بيانات لعرضها.</string>
     <string name="select_shift">إختر شيفت</string>
     <string name="log">السجل</string>
+    <string name="last_actions">اخر النشاطات</string>
+
 </resources>

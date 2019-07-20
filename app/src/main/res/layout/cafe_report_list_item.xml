@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/tv_bill_item"
-        style="@style/BigHeadLineTextView"
+        style="@style/SmallHeadLineTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -33,15 +33,16 @@
         app:layout_constraintTop_toTopOf="@+id/tv_bill_item" />
 
     <TextView
-        style="@style/SmallHeadLineTextView"
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Shift_name"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_bill_item"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bill_item" />
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView11"
@@ -54,7 +55,6 @@
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
-        style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_shift_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -68,14 +68,14 @@
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
-        style="@style/SmallHeadLineTextView"
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Pre Discount"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        style="@style/SmallHeadLineTextView"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/textView14"
@@ -99,14 +99,14 @@
         app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <TextView
-        style="@style/SmallHeadLineTextView"
         android:id="@+id/textView16"
+        style="@style/BigHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Bill Cash"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
 
     <ImageView
@@ -140,15 +140,13 @@
 
     <TextView
         android:id="@+id/textView19"
+        style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/bill_date"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <TextView
         android:id="@+id/textView20"
@@ -161,6 +159,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView19" />
 
     <TextView
+        style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_bill_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -171,14 +170,16 @@
         app:layout_constraintTop_toTopOf="@+id/textView19" />
 
     <TextView
-        style="@style/SmallHeadLineTextView"
+        android:textColor="#0091EA"
         android:id="@+id/textView12"
+        style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Room Table"
-        app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintStart_toStartOf="@+id/tv_bill_item"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bill_item" />
 
     <TextView
         android:id="@+id/textView15"
@@ -191,14 +192,14 @@
         app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <TextView
-        style="@style/SmallHeadLineTextView"
         android:id="@+id/textView18"
+        style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Item Quantity"
         app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView21"
@@ -219,6 +220,8 @@
         tools:layout_editor_absoluteX="403dp" />
 
     <TextView
+        android:padding="4dp"
+        android:background="@drawable/border_blue"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_room_table"
         android:layout_width="0dp"

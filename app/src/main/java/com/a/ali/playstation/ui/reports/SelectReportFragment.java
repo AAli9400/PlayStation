@@ -43,6 +43,9 @@ public class SelectReportFragment extends Fragment {
     private Spinner mShiftSpinner;
     private RadioGroup mReportTypeRadioGroup;
 
+    private ImageView mOpenSpinnerImageView;
+    private Spinner mCafeTypeSpinner;
+
     private RecyclerView mReportRecyclerView;
 
     private ConstraintLayout mReportDetailsConstraintLayout;
@@ -72,6 +75,21 @@ public class SelectReportFragment extends Fragment {
 
         mReportRecyclerView = view.findViewById(R.id.recyclerview);
         mReportDetailsConstraintLayout = view.findViewById(R.id.cl_report_details);
+
+        mCafeTypeSpinner = view.findViewById(R.id.s_cafe_type);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"mini", "cafe"});
+        mCafeTypeSpinner.setAdapter(adapter);
+        mOpenSpinnerImageView = view.findViewById(R.id.iv_open_spinner2);
+
+        mReportTypeRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            if (i == R.id.rb_cafe) {
+                mCafeTypeSpinner.setVisibility(View.VISIBLE);
+                mOpenSpinnerImageView.setVisibility(View.VISIBLE);
+            } else if (i == R.id.rb_playstation) {
+                mCafeTypeSpinner.setVisibility(View.GONE);
+                mOpenSpinnerImageView.setVisibility(View.GONE);
+            }
+        });
 
         setupReportDates(view);
 
@@ -172,6 +190,7 @@ public class SelectReportFragment extends Fragment {
 
     private void validateReportData() {
         String selectedShiftName = (String) mShiftSpinner.getSelectedItem();
+        String selectedCafeType = (String) mCafeTypeSpinner.getSelectedItem();
         int checkedReportTypeRadioButtonId = mReportTypeRadioGroup.getCheckedRadioButtonId();
 
         if (selectedShiftName == null) {
@@ -235,6 +254,7 @@ public class SelectReportFragment extends Fragment {
                 });
             } else if (checkedReportTypeRadioButtonId == R.id.rb_cafe) {
                 mAppNetworkRepository.cafeReport(
+                        selectedCafeType,
                         selectedShiftName,
                         startDate,
                         startHour,

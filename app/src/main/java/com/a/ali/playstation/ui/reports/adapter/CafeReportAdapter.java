@@ -70,7 +70,7 @@ public class CafeReportAdapter extends RecyclerView.Adapter<CafeReportAdapter.Vi
             billCashTextView = itemView.findViewById(R.id.tv_bill_cash);
             roomTableTextView = itemView.findViewById(R.id.tv_room_table);
             itemQuantityTextView = itemView.findViewById(R.id.tv_item_quantity);
-            startDateTextView = itemView.findViewById(R.id.tv_start_date);
+            startDateTextView = itemView.findViewById(R.id.tv_bill_date);
         }
     }
 }

@@ -7,10 +7,11 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Console {
-    private String dev_code;
-
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    private String dev_code;
     private String startTime;
 
     private String single_multi;
@@ -30,12 +31,21 @@ public class Console {
     public Console() {
     }
 
-    public Console(String dev_code, String startTime, String single_multi, String state, String depositCash) {
+    public Console(int id, String dev_code, String startTime, String single_multi, String state, String depositCash) {
+        this.id = id;
         this.dev_code = dev_code;
         this.startTime = startTime;
         this.single_multi = single_multi;
         this.state = state;
         DepositCash = depositCash;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDev_code() {
@@ -76,5 +86,21 @@ public class Console {
 
     public void setDepositCash(String depositCash) {
         DepositCash = depositCash;
+    }
+
+    public static String getConsoleStatusFinish() {
+        return CONSOLE_STATUS_FINISH;
+    }
+
+    public static String getConsoleStatusPlaying() {
+        return CONSOLE_STATUS_PLAYING;
+    }
+
+    public static String getConsoleStatusSingle() {
+        return CONSOLE_STATUS_SINGLE;
+    }
+
+    public static String getConsoleStatusMulti() {
+        return CONSOLE_STATUS_MULTI;
     }
 }

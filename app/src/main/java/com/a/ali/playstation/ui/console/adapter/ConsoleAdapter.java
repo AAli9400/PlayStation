@@ -15,6 +15,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.Console;
+import com.a.ali.playstation.data.repository.AppDatabaseRepository;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.util.AppDialog;
 import com.google.android.material.button.MaterialButton;
@@ -27,14 +28,20 @@ import static com.a.ali.playstation.data.model.Console.*;
 public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHolder> {
     private Context mContext;
     private AppNetworkRepository mAppNetworkRepository;
+    private AppDatabaseRepository mAppDatabaseRepository;
     private Fragment mOwnerFragment;
 
     private List<Console> mConsoles = null;
 
-    public ConsoleAdapter(Context context, AppNetworkRepository appNetworkRepository, Fragment ownerFragment) {
+    private boolean mForLog;
+
+    public ConsoleAdapter(Context context, AppNetworkRepository appNetworkRepository, Fragment ownerFragment, boolean forLog, AppDatabaseRepository instance) {
         mContext = context;
         mAppNetworkRepository = appNetworkRepository;
         mOwnerFragment = ownerFragment;
+
+        mForLog = forLog;
+        mAppDatabaseRepository = instance;
     }
 
     @NonNull
@@ -49,6 +56,15 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Console console = mConsoles.get(position);
+
+        mAppNetworkRepository.loadOrders(console.getDev_code())
+                .observe(mOwnerFragment, cafeOrders -> {
+                    if (cafeOrders != null && !cafeOrders.isEmpty()) {
+                        holder.ordersButton.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.ordersButton.setVisibility(View.GONE);
+                    }
+                });
 
         holder.consoleNameTextView.setText(console.getDev_code());
         holder.consoleStartDate.setText(console.getStartTime());
@@ -78,14 +94,55 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
         holder.moneyTextView.setText(console.getDepositCash());
 
 
-        holder.ordersButton.setOnClickListener(view -> showOrdersDialog(console.getDev_code()));
+        holder.ordersButton.setOnClickListener(view -> {
+            if (!mForLog) {
+                showOrdersDialog(console.getDev_code());
+            } else {
+                loadOrdersFromDatabase(console.getDev_code());
+            }
+        });
+    }
+
+    private void loadOrdersFromDatabase(String dev_code) {
+        AppDialog.show(mContext, R.layout.cafe_orders_dialog, (view, dialog) -> {
+
+            TextView consoleCodeTextView = view.findViewById(R.id.tv_console_name);
+            consoleCodeTextView.setText(dev_code);
+
+            RecyclerView ordersRecyclerView = view.findViewById(R.id.recyclerview);
+
+            OrderAdapter orderAdapter = new OrderAdapter(mContext);
+            ordersRecyclerView.setAdapter(orderAdapter);
+
+            mAppDatabaseRepository.getConsoleId(dev_code)
+                    .observe(mOwnerFragment, integer -> {
+                        if(integer != null){
+                            mAppDatabaseRepository.selectOrders(integer)
+                                    .observe(mOwnerFragment, cafeOrders -> {
+                                        if (cafeOrders != null) {
+                                            double price = orderAdapter.swapData(cafeOrders);
+                                            ((TextView) view.findViewById(R.id.tv_total_cafe_order))
+                                                    .setText(String.valueOf(price));
+
+                                        } else {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                        }
+                    });
+        });
+
     }
 
     private void showOrdersDialog(String consoleCode) {
         AppDialog.show(mContext, R.layout.cafe_orders_dialog, (view, dialog) -> {
+
+            TextView consoleCodeTextView = view.findViewById(R.id.tv_console_name);
+            consoleCodeTextView.setText(consoleCode);
+
             RecyclerView ordersRecyclerView = view.findViewById(R.id.recyclerview);
 
-            OrderAdapter orderAdapter = new OrderAdapter();
+            OrderAdapter orderAdapter = new OrderAdapter(mContext);
             ordersRecyclerView.setAdapter(orderAdapter);
 
             mAppNetworkRepository.loadOrders(consoleCode).observe(

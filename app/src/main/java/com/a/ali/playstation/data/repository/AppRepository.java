@@ -13,4 +13,5 @@ public abstract class AppRepository {
 
         this.mAppExecutors = AppExecutors.getInstance();
     }
+
 }
