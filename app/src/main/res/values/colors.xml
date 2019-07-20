@@ -9,6 +9,7 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorCafe">#F5D209</color>
+    <color name="colorEmptyView">#FFFFFF</color>
 
     <color name="textColorBlue">#2979FF</color>
     <color name="textColorBlack">#000000</color>

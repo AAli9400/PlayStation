@@ -28,5 +28,9 @@
     <string name="username_not_found">إسم المستخدم غير موجود.</string>
     <string name="display">عرض</string>
     <string name="set_ip_address">Set Ip Address</string>
-    <string name="total">Total:</string>
+    <string name="total">المجموع:</string>
+    <string name="bill_date">تاريخ الفاتورة</string>
+    <string name="all">الكل</string>
+    <string name="no_data_to_display">NO DATA TO DISPLAY.</string>
+    <string name="select_shift">Select Shift</string>
 </resources>

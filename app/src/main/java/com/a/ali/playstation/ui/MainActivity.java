@@ -1,5 +1,7 @@
 package com.a.ali.playstation.ui;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -8,13 +10,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.os.Bundle;
-
 import com.a.ali.playstation.R;
 
 public class MainActivity extends AppCompatActivity {
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
+
+    private boolean mIsCurrentFragmentReport = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +40,24 @@ public class MainActivity extends AppCompatActivity {
                 switch (destination.getId()) {
                     case R.id.loginFragment:
                         actionBar.hide();
+                        mIsCurrentFragmentReport = false;
                         break;
 
                     case R.id.consoleFragment:
                         actionBar.setTitle(getString(R.string.home));
                         actionBar.show();
                         actionBar.setDisplayHomeAsUpEnabled(false);
+                        mIsCurrentFragmentReport = false;
                         break;
 
-                    default:
+                    case R.id.selectReportFragment:
                         actionBar.setDisplayHomeAsUpEnabled(true);
+                        mIsCurrentFragmentReport = true;
+                        break;
+
+                    case R.id.til_ip_address:
+                        actionBar.setDisplayHomeAsUpEnabled(true);
+                        mIsCurrentFragmentReport = false;
                         break;
                 }
             });
@@ -59,11 +69,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+//        onBackPressed();
+//        return true;
         return NavigationUI.navigateUp(mNavController, mAppBarConfiguration);
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         NavDestination navController = mNavController.getCurrentDestination();
 
         if (navController != null && navController.getId() == R.id.consoleFragment) {
@@ -72,6 +85,4 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-
 }

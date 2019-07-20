@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.CafeOrders;
+import com.a.ali.playstation.data.model.CafeReport;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.model.PlayReport;
 import com.a.ali.playstation.data.model.User;
@@ -19,7 +20,6 @@ import com.a.ali.playstation.data.network.networkUtil.AppNetworkConnectivityUtil
 import com.a.ali.playstation.data.network.retrofit.RetrofitCall;
 import com.a.ali.playstation.data.network.retrofit.RetrofitMethods;
 
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -90,6 +90,21 @@ public class AppNetworkRepository extends AppRepository {
                                                  @NonNull String am_pm_end) {
         return new RetrofitRequest<List<PlayReport>>().enqueue(() ->
                 mRetrofitMethods.playReport(shiftName,
+                        startDate, startHour, startMinute, am_pm_start,
+                        endDate, endHour, endMinute, am_pm_end));
+    }
+
+    public LiveData<List<CafeReport>> cafeReport(@NonNull String shiftName,
+                                                 @NonNull String startDate,
+                                                 @NonNull String startHour,
+                                                 @NonNull String startMinute,
+                                                 @NonNull String am_pm_start,
+                                                 @NonNull String endDate,
+                                                 @NonNull String endHour,
+                                                 @NonNull String endMinute,
+                                                 @NonNull String am_pm_end) {
+        return new RetrofitRequest<List<CafeReport>>().enqueue(() ->
+                mRetrofitMethods.cafeReport(shiftName,
                         startDate, startHour, startMinute, am_pm_start,
                         endDate, endHour, endMinute, am_pm_end));
     }

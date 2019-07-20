@@ -46,6 +46,6 @@ public class AppLoadingViewUtil {
         new Handler().postDelayed(() -> {
             mLogoAnimatable2Compat.stop();
             mLoadingImageView.setVisibility(View.GONE);
-        }, 500);
+        }, 0);
     }
 }

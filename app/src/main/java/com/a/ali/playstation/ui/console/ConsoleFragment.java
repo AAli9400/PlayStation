@@ -1,7 +1,6 @@
 package com.a.ali.playstation.ui.console;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
@@ -38,6 +37,7 @@ public class ConsoleFragment extends Fragment {
     private RecyclerView mRoomsRecyclerView;
 
     private ImageView mLoadingImageView;
+    private ConstraintLayout mEmptyView;
     private AppLoadingViewUtil mLoadingViewUtil;
 
     private ConsoleAdapter mConsoleAdapter;
@@ -49,7 +49,7 @@ public class ConsoleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_room, parent, false);
+        View view = inflater.inflate(R.layout.fragment_console, parent, false);
         setHasOptionsMenu(true);
 
         mContext = getContext();
@@ -61,6 +61,8 @@ public class ConsoleFragment extends Fragment {
         mLoadingImageView = view.findViewById(R.id.iv_loading);
         mLoadingViewUtil = new AppLoadingViewUtil(mContext, mLoadingImageView);
         mLoadingImageView.setImageDrawable(mLoadingViewUtil.getDrawable());
+
+        mEmptyView = view.findViewById(R.id.cl_empty_view);
 
         mRoomsRecyclerView = view.findViewById(R.id.recyclerview);
 
@@ -83,7 +85,6 @@ public class ConsoleFragment extends Fragment {
                 .build();
 
         WorkManager.getInstance(mContext).enqueue(workRequest);
-
     }
 
     private void loadConsoles() {
@@ -93,6 +94,10 @@ public class ConsoleFragment extends Fragment {
                 .observe(this, response -> {
                     if (response != null) {
                         mConsoleAdapter.swapData(response);
+
+                        mEmptyView.setVisibility(View.GONE);
+                    } else {
+                        mEmptyView.setVisibility(View.VISIBLE);
                     }
                     mLoadingViewUtil.hide();
                 });

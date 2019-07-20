@@ -189,4 +189,8 @@
     <include
         layout="@layout/loading_view"
         tools:visibility="invisible" />
+
+    <include
+        layout="@layout/empty_view"
+        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

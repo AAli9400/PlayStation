@@ -36,4 +36,8 @@
     <string name="display">Display</string>
     <string name="set_ip_address">Set Ip Address</string>
     <string name="total">Total:</string>
+    <string name="bill_date">Bill Date</string>
+    <string name="all">All</string>
+    <string name="no_data_to_display">NO DATA TO DISPLAY.</string>
+    <string name="select_shift">Select Shift</string>
 </resources>

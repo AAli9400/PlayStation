@@ -21,4 +21,8 @@
         layout="@layout/loading_view"
         tools:visibility="gone" />
 
+    <include
+        layout="@layout/empty_view"
+        tools:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

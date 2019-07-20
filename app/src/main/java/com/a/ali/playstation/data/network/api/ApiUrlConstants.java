@@ -11,4 +11,5 @@ public class ApiUrlConstants {
     public static final String LOAD_CONSOLES_URL = "GetConsoleLIST";
     public static final String LOAD_ORDERS_URL = "GetminiOrder";
     public static final String PLAY_REPORT_URL = "PlayReport";
+    public static final String CAFE_REPORT_URL = "CafeRep/cafe";
 }
