@@ -3,11 +3,11 @@ package com.a.ali.playstation.data.repository;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 import com.a.ali.playstation.data.database.AppDatabase;
 import com.a.ali.playstation.data.database.dao.ConsoleDao;
 import com.a.ali.playstation.data.model.Console;
-import com.a.ali.playstation.data.network.api.ApiResponseConstants;
 
 import java.util.List;
 
@@ -28,6 +28,10 @@ public class AppDatabaseRepository extends AppRepository {
 
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         mConsoleDao = appDatabase.consoleDao();
+    }
+
+    public LiveData<List<Console>> selectAllLiveData() {
+        return mConsoleDao.selectAllLiveData();
     }
 
     public void deleteAllConsolesData() {

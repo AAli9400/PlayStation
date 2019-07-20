@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.LogFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -16,12 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/console_list_item" />
 
-    <include
-        layout="@layout/loading_view"
-        tools:visibility="gone" />
-
-    <include
-        layout="@layout/empty_view"
-        tools:visibility="gone" />
+    <include layout="@layout/empty_view"
+        tools:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

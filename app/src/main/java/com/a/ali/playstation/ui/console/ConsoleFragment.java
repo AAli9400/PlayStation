@@ -34,7 +34,7 @@ import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 import java.util.concurrent.TimeUnit;
 
 public class ConsoleFragment extends Fragment {
-    private RecyclerView mRoomsRecyclerView;
+    private RecyclerView mConsolessRecyclerView;
 
     private ImageView mLoadingImageView;
     private ConstraintLayout mEmptyView;
@@ -64,10 +64,10 @@ public class ConsoleFragment extends Fragment {
 
         mEmptyView = view.findViewById(R.id.cl_empty_view);
 
-        mRoomsRecyclerView = view.findViewById(R.id.recyclerview);
+        mConsolessRecyclerView = view.findViewById(R.id.recyclerview);
 
         mConsoleAdapter = new ConsoleAdapter(mContext, mAppNetworkRepository, this);
-        mRoomsRecyclerView.setAdapter(mConsoleAdapter);
+        mConsolessRecyclerView.setAdapter(mConsoleAdapter);
 
         loadConsoles();
 
