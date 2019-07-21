@@ -35,5 +35,6 @@
     <string name="select_shift">إختر شيفت</string>
     <string name="log">السجل</string>
     <string name="last_actions">اخر النشاطات</string>
+    <string name="reset_ip">Reset IP Address</string>
 
 </resources>

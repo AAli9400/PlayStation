@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
@@ -23,19 +23,22 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.a.ali.playstation.data.model.Console.*;
+import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_FINISH;
+import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_MULTI;
+import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_PLAYING;
+import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_SINGLE;
 
 public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHolder> {
     private Context mContext;
     private AppNetworkRepository mAppNetworkRepository;
     private AppDatabaseRepository mAppDatabaseRepository;
-    private Fragment mOwnerFragment;
+    private AppCompatActivity mOwnerFragment;
 
     private List<Console> mConsoles = null;
 
     private boolean mForLog;
 
-    public ConsoleAdapter(Context context, AppNetworkRepository appNetworkRepository, Fragment ownerFragment, boolean forLog, AppDatabaseRepository instance) {
+    public ConsoleAdapter(Context context, AppNetworkRepository appNetworkRepository, AppCompatActivity ownerFragment, boolean forLog, AppDatabaseRepository instance) {
         mContext = context;
         mAppNetworkRepository = appNetworkRepository;
         mOwnerFragment = ownerFragment;
@@ -57,14 +60,16 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Console console = mConsoles.get(position);
 
-        mAppNetworkRepository.loadOrders(console.getDev_code())
-                .observe(mOwnerFragment, cafeOrders -> {
-                    if (cafeOrders != null && !cafeOrders.isEmpty()) {
-                        holder.ordersButton.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.ordersButton.setVisibility(View.GONE);
-                    }
-                });
+        if (!mForLog) {
+            mAppNetworkRepository.loadOrders(console.getDev_code())
+                    .observe(mOwnerFragment, cafeOrders -> {
+                        if (cafeOrders != null && !cafeOrders.isEmpty()) {
+                            holder.ordersButton.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.ordersButton.setVisibility(View.GONE);
+                        }
+                    });
+        }
 
         holder.consoleNameTextView.setText(console.getDev_code());
         holder.consoleStartDate.setText(console.getStartTime());
@@ -116,7 +121,7 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
 
             mAppDatabaseRepository.getConsoleId(dev_code)
                     .observe(mOwnerFragment, integer -> {
-                        if(integer != null){
+                        if (integer != null) {
                             mAppDatabaseRepository.selectOrders(integer)
                                     .observe(mOwnerFragment, cafeOrders -> {
                                         if (cafeOrders != null) {

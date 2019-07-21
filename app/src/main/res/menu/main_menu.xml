@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/selectReportFragment"
+    <item android:id="@+id/action_report"
         android:title="@string/reports"
         android:icon="@drawable/ic_reports"/>
 
-    <item android:id="@+id/IpFragment"
+    <item android:id="@+id/action_ip"
         android:title="@string/set_ip_address"
         android:icon="@drawable/ic_settings"/>
 
@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_refresh"/>
 
     <item
-        android:id="@+id/logFragment"
+        android:id="@+id/action_last_actions"
         android:title="@string/last_actions" />
 
     <item android:id="@+id/action_logout"

@@ -1,8 +1,6 @@
 package com.a.ali.playstation.ui.util;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -29,23 +27,11 @@ public class AppLoadingViewUtil {
 
     public void show() {
         mLoadingImageView.setVisibility(View.VISIBLE);
-
-        if (mLogoAnimatable2Compat != null) {
-            mLogoAnimatable2Compat.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-                @Override
-                public void onAnimationEnd(Drawable drawable) {
-                    mLogoAnimatable2Compat.start();
-                }
-            });
-
-            mLogoAnimatable2Compat.start();
-        }
+        mLogoAnimatable2Compat.start();
     }
 
     public void hide() {
-        new Handler().postDelayed(() -> {
-            mLogoAnimatable2Compat.stop();
-            mLoadingImageView.setVisibility(View.GONE);
-        }, 0);
+        mLogoAnimatable2Compat.stop();
+        mLoadingImageView.setVisibility(View.GONE);
     }
 }

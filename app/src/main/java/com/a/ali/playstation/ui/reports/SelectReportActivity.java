@@ -2,20 +2,16 @@ package com.a.ali.playstation.ui.reports;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
@@ -32,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SelectReportFragment extends Fragment {
+public class SelectReportActivity extends AppCompatActivity {
     private ConstraintLayout mEmptyView;
     private ImageView mLoadingImageView;
     private AppLoadingViewUtil mLoadingViewUtil;
@@ -50,36 +46,36 @@ public class SelectReportFragment extends Fragment {
 
     private ConstraintLayout mReportDetailsConstraintLayout;
 
-    private Context mContext;
     private AppNetworkRepository mAppNetworkRepository;
 
     private PlayReportAdapter mPlayReportAdapter;
     private CafeReportAdapter mCafeReportAdapter;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_report, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_select_report);
 
-        mContext = getContext();
-        mAppNetworkRepository = AppNetworkRepository.getInstance(getActivity().getApplication());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mShiftSpinner = view.findViewById(R.id.s_shift);
-        mReportTypeRadioGroup = view.findViewById(R.id.rg_report_type);
+        mAppNetworkRepository = AppNetworkRepository.getInstance(getApplication());
 
-        mLoadingImageView = view.findViewById(R.id.iv_loading);
-        mLoadingViewUtil = new AppLoadingViewUtil(mContext, mLoadingImageView);
+        mShiftSpinner = findViewById(R.id.s_shift);
+        mReportTypeRadioGroup = findViewById(R.id.rg_report_type);
+
+        mLoadingImageView = findViewById(R.id.iv_loading);
+        mLoadingViewUtil = new AppLoadingViewUtil(this, mLoadingImageView);
         mLoadingImageView.setImageDrawable(mLoadingViewUtil.getDrawable());
 
-        mEmptyView = view.findViewById(R.id.cl_empty_view);
+        mEmptyView = findViewById(R.id.cl_empty_view);
 
-        mReportRecyclerView = view.findViewById(R.id.recyclerview);
-        mReportDetailsConstraintLayout = view.findViewById(R.id.cl_report_details);
+        mReportRecyclerView = findViewById(R.id.recyclerview);
+        mReportDetailsConstraintLayout = findViewById(R.id.cl_report_details);
 
-        mCafeTypeSpinner = view.findViewById(R.id.s_cafe_type);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"mini", "cafe"});
+        mCafeTypeSpinner = findViewById(R.id.s_cafe_type);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"mini", "cafe"});
         mCafeTypeSpinner.setAdapter(adapter);
-        mOpenSpinnerImageView = view.findViewById(R.id.iv_open_spinner2);
+        mOpenSpinnerImageView = findViewById(R.id.iv_open_spinner2);
 
         mReportTypeRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
             if (i == R.id.rb_cafe) {
@@ -91,14 +87,12 @@ public class SelectReportFragment extends Fragment {
             }
         });
 
-        setupReportDates(view);
+        setupReportDates();
 
         loadShifts();
 
-        MaterialButton displayButton = view.findViewById(R.id.mbtn_go);
+        MaterialButton displayButton = findViewById(R.id.mbtn_go);
         displayButton.setOnClickListener(view1 -> validateReportData());
-
-        return view;
     }
 
     private void loadShifts() {
@@ -110,27 +104,27 @@ public class SelectReportFragment extends Fragment {
                     usernames.add(user.getUserN());
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, usernames);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usernames);
                 mShiftSpinner.setAdapter(adapter);
             }
         });
     }
 
-    private void setupReportDates(@NonNull View view) {
-        TextInputLayout dateFromTextInputLayout = view.findViewById(R.id.til_from_date);
-        View dateFromView = view.findViewById(R.id.view_from_date);
+    private void setupReportDates() {
+        TextInputLayout dateFromTextInputLayout = findViewById(R.id.til_from_date);
+        View dateFromView = findViewById(R.id.view_from_date);
         dateFromView.setOnClickListener(view1 -> {
             mReportCalenderFrom = Calendar.getInstance();
             mReportCalenderFrom.setTimeInMillis(System.currentTimeMillis());
             new DatePickerDialog(
-                    mContext,
+                    this,
                     R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                     (datePicker, year, month, day) -> {
                         mReportCalenderFrom.set(Calendar.YEAR, year);
                         mReportCalenderFrom.set(Calendar.MONTH, month);
                         mReportCalenderFrom.set(Calendar.DAY_OF_MONTH, day);
                         new TimePickerDialog(
-                                mContext,
+                                this,
                                 R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                                 (timePicker, hour, minute) -> {
                                     mReportCalenderFrom.set(Calendar.HOUR, hour);
@@ -152,20 +146,20 @@ public class SelectReportFragment extends Fragment {
             ).show();
         });
 
-        TextInputLayout dateToTextInputLayout = view.findViewById(R.id.til_to_date);
-        View dateToView = view.findViewById(R.id.view_to_date);
+        TextInputLayout dateToTextInputLayout = findViewById(R.id.til_to_date);
+        View dateToView = findViewById(R.id.view_to_date);
         dateToView.setOnClickListener(view1 -> {
             mReportCalenderTo = Calendar.getInstance();
             mReportCalenderTo.setTimeInMillis(System.currentTimeMillis());
             new DatePickerDialog(
-                    mContext,
+                    this,
                     R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                     (datePicker, year, month, day) -> {
                         mReportCalenderTo.set(Calendar.YEAR, year);
                         mReportCalenderTo.set(Calendar.MONTH, month);
                         mReportCalenderTo.set(Calendar.DAY_OF_MONTH, day);
                         new TimePickerDialog(
-                                mContext,
+                                this,
                                 R.style.Theme_MaterialComponents_Light_Dialog_Alert,
                                 (timePicker, hour, minute) -> {
                                     mReportCalenderTo.set(Calendar.HOUR, hour);
@@ -194,11 +188,11 @@ public class SelectReportFragment extends Fragment {
         int checkedReportTypeRadioButtonId = mReportTypeRadioGroup.getCheckedRadioButtonId();
 
         if (selectedShiftName == null) {
-            Toast.makeText(mContext, getString(R.string.select_shift), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.select_shift), Toast.LENGTH_SHORT).show();
         } else if (mReportDateFrom == null) {
-            Toast.makeText(mContext, getString(R.string.date_from_required), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.date_from_required), Toast.LENGTH_LONG).show();
         } else if (mReportDateTo == null) {
-            Toast.makeText(mContext, getString(R.string.date_to_required), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.date_to_required), Toast.LENGTH_LONG).show();
         } else {
             mLoadingViewUtil.show();
 

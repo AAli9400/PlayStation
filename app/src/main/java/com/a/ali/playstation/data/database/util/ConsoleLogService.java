@@ -44,42 +44,39 @@ public class ConsoleLogService extends IntentService {
 
                     databaseRepository.insertConsoles(consoles);
 
-                    AppExecutors.getInstance().executeOnDiskIOThread(() -> {
+                    List<Console> addedConsoles = databaseRepository.selectAllConsoles();
 
+                    for (int i = 0; i < addedConsoles.size(); i++) {
+                        Console console = addedConsoles.get(i);
 
-                        List<Console> addedConsoles = databaseRepository.selectAllConsoles();
+                        retrofitMethods.loadOrders(console.getDev_code())
+                                .enqueue(new Callback<List<CafeOrder>>() {
+                                    @Override
+                                    public void onResponse(Call<List<CafeOrder>> call, Response<List<CafeOrder>> response) {
+                                        if (response.body() != null) {
+                                            ArrayList<CafeOrder> ordersList = (ArrayList<CafeOrder>) response.body();
 
-                        for (int i = 0; i < addedConsoles.size(); i++) {
-                            Console console = addedConsoles.get(i);
-
-                            retrofitMethods.loadOrders(console.getDev_code())
-                                    .enqueue(new Callback<List<CafeOrder>>() {
-                                        @Override
-                                        public void onResponse(Call<List<CafeOrder>> call, Response<List<CafeOrder>> response) {
-                                            if (response.body() != null) {
-                                                ArrayList<CafeOrder> ordersList = (ArrayList<CafeOrder>) response.body();
-
-                                                AppExecutors.getInstance().executeOnDiskIOThread(() -> {
-                                                    for (CafeOrder orders : ordersList) {
-                                                    ordersList.remove(orders);
-                                                    orders.setConsoleId(console.getId());
-                                                    ordersList.add(orders);
+                                            AppExecutors.getInstance().executeOnDiskIOThread(() -> {
+                                                for (int j = 0; j < ordersList.size(); j++) {
+                                                    CafeOrder order = ordersList.get(j);
+                                                    order.setConsoleId(console.getId());
+                                                    ordersList.set(j,order);
                                                 }
 
                                                 databaseRepository.insertAllCafeOrders(ordersList);
-                                                });
+                                            });
 //
-                                            }
                                         }
+                                    }
 
-                                        @Override
-                                        public void onFailure(Call<List<CafeOrder>> call, Throwable t) {
-                                            //ignore
-                                        }
-                                    });
+                                    @Override
+                                    public void onFailure(Call<List<CafeOrder>> call, Throwable t) {
+                                        //ignore
+                                    }
+                                });
 
-                        }
-                    });
+                    }
+
                 }
                 //else do nothing
             }
