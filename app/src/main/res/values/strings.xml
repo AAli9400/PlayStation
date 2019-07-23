@@ -44,4 +44,5 @@
 
     <string name="last_actions">Last Actions</string>
     <string name="reset_ip">Reset IP Address</string>
+    <string name="export_as_pdf">Export as pdf</string>
 </resources>

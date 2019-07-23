@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.CafeReport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CafeReportAdapter extends RecyclerView.Adapter<CafeReportAdapter.ViewHolder> {
@@ -55,6 +56,10 @@ public class CafeReportAdapter extends RecyclerView.Adapter<CafeReportAdapter.Vi
         mCafeReports = cafeOrders;
 
         notifyDataSetChanged();
+    }
+
+    public List<CafeReport> getData() {
+        return mCafeReports;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

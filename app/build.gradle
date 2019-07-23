@@ -48,4 +48,7 @@ dependencies {
     //WorkerManager
     // (Java only)
     implementation "androidx.work:work-runtime:2.1.0"
+
+    //itextg (PDF LIBRARY)
+    implementation 'com.itextpdf:itextg:5.5.10'
 }

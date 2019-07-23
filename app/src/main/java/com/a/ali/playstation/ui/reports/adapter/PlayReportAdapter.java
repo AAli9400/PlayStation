@@ -62,6 +62,10 @@ public class PlayReportAdapter extends RecyclerView.Adapter<PlayReportAdapter.Vi
         notifyDataSetChanged();
     }
 
+    public List<PlayReport> getData() {
+        return mPlayReports;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView codeTextView, statusTextView, shiftNameTextView, prediscountTextView, billCashTextView, startDateTextView, endDateTextView;
         ImageView multiImageView;

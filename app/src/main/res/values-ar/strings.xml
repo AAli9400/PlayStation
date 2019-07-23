@@ -36,5 +36,6 @@
     <string name="log">السجل</string>
     <string name="last_actions">اخر النشاطات</string>
     <string name="reset_ip">Reset IP Address</string>
+    <string name="export_as_pdf">إستخراج ملف pdf</string>
 
 </resources>

@@ -3,6 +3,8 @@ package com.a.ali.playstation.ui.reports;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -10,23 +12,32 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.model.CafeReport;
+import com.a.ali.playstation.data.model.PlayReport;
 import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.reports.adapter.CafeReportAdapter;
 import com.a.ali.playstation.ui.reports.adapter.PlayReportAdapter;
+import com.a.ali.playstation.ui.reports.pdf.ITextGUtil;
 import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class SelectReportActivity extends AppCompatActivity {
     private ConstraintLayout mEmptyView;
@@ -276,6 +287,104 @@ public class SelectReportActivity extends AppCompatActivity {
                     mLoadingViewUtil.hide();
                 });
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.report_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_pdf) {
+            ITextGUtil.createPdfFile(
+                    mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                            R.id.rb_cafe ? 8 : 7,
+                    getApplication(),
+                    mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                            R.id.rb_cafe ? new CafeReportHelper() : new PlayReportHelper());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class PlayReportHelper implements ITextGUtil.Helper {
+
+        @Override
+        public void setData(PdfPTable table, Font arialFont) {
+            if (mPlayReportAdapter != null) {
+                List<PlayReport> playReports = mPlayReportAdapter.getData();
+                if (playReports != null) {
+                    for (PlayReport report : playReports) {
+                        table.addCell(new PdfPCell(new Paragraph(report.getPs(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getStart_date(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getFinish_date(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getSingle_multi(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getPreDiscount(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getBillCash(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getShift_name(), arialFont)));
+                    }
+                }
+            }
+        }
+
+        @Override
+        public boolean setHeader(PdfPTable table, Font arialFont) {
+            table.addCell(new PdfPCell(new Paragraph("جهاز", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("وقت البداية", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("وقت النهاية", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("نوع اللعب", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("قبل الخصم", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("نهائي", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("شيفت", arialFont)));
+            return true;
+        }
+    }
+
+    private class CafeReportHelper implements ITextGUtil.Helper {
+
+        @Override
+        public void setData(PdfPTable table, Font arialFont) {
+            if (mCafeReportAdapter != null) {
+                List<CafeReport> cafeReports = mCafeReportAdapter.getData();
+                if (cafeReports != null) {
+                    Double totalPriceBeforeDiscount = 0.0;
+                    Double totalPrice = 0.0;
+
+                    for (CafeReport report : cafeReports) {
+                        table.addCell(new PdfPCell(new Paragraph(report.getBillNo(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getRoom_Table(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getBillDate(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getBillItem(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getItemQt(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getPreDiscount(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getBillCash(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getShift_name(), arialFont)));
+
+                        totalPriceBeforeDiscount += Double.valueOf(report.getPreDiscount());
+                        totalPrice += Double.valueOf(report.getBillCash());
+                    }
+
+                    table.addCell(new PdfPCell(new Paragraph("الإجمالي", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPriceBeforeDiscount), arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPrice), arialFont)));
+                }
+            }
+        }
+
+        @Override
+        public boolean setHeader(PdfPTable table, Font arialFont) {
+            table.addCell(new PdfPCell(new Paragraph("فاتورة", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("رقم الطاولة", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("التاريخ والوقت", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("الأصناف", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("الكمية", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("قبل الخصم", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("السعر", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("شيفت", arialFont)));
+            return true;
         }
     }
 }
