@@ -34,7 +34,7 @@ public class AppDatabaseRepository extends AppRepository {
         mCafeDao = appDatabase.cafeDao();
     }
 
-    public LiveData<List<Console>> selectAllLiveData() {
+    public LiveData<List<Console>> selectAllConsolesLiveData() {
         return mConsoleDao.selectAllLiveData();
     }
 

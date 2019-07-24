@@ -45,7 +45,7 @@ public class LastActionsActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        mAppDatabaseRepository.selectAllLiveData().observe(this, consoles -> {
+        mAppDatabaseRepository.selectAllConsolesLiveData().observe(this, consoles -> {
             if (consoles == null || consoles.isEmpty()) {
                 mEmptyViewConstraintLayout.setVisibility(View.VISIBLE);
             } else {

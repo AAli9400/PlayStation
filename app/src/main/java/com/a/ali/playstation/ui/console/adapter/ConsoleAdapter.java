@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.model.CafeOrder;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.repository.AppDatabaseRepository;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.util.AppDialog;
+import com.a.ali.playstation.util.AppExecutors;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -65,6 +67,17 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
                     .observe(mOwnerFragment, cafeOrders -> {
                         if (cafeOrders != null && !cafeOrders.isEmpty()) {
                             holder.ordersButton.setVisibility(View.VISIBLE);
+
+                            AppExecutors.getInstance().executeOnDiskIOThread(() -> {
+                                for (int i = 0; i < cafeOrders.size(); i++) {
+                                    CafeOrder order = cafeOrders.get(i);
+                                    order.setConsoleId(console.getId());
+                                    cafeOrders.set(i,order);
+                                }
+
+                                mAppDatabaseRepository.insertAllCafeOrders(cafeOrders);
+                            });
+//
                         } else {
                             holder.ordersButton.setVisibility(View.GONE);
                         }

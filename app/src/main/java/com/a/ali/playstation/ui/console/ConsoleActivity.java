@@ -1,5 +1,13 @@
 package com.a.ali.playstation.ui.console;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,14 +17,6 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.database.util.ConsoleLogWorkerManager;
 import com.a.ali.playstation.data.model.User;
@@ -25,6 +25,7 @@ import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
 import com.a.ali.playstation.ui.ip.IPActivity;
 import com.a.ali.playstation.ui.lastActions.LastActionsActivity;
+import com.a.ali.playstation.ui.reports.SelectReportActivity;
 import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -87,9 +88,24 @@ public class ConsoleActivity extends AppCompatActivity {
         mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {
                     if (response != null) {
-                        mConsoleAdapter.swapData(response);
+//                        mConsoleAdapter.swapData(response);
 
-                        mEmptyView.setVisibility(View.GONE);
+                        if (response.size() > 0) {
+                            mAppDatabaseRepository.deleteAllConsolesData();
+                            mAppDatabaseRepository.deleteAllCafeOrders();
+
+                            mAppDatabaseRepository.insertConsoles(response);
+
+                            mAppDatabaseRepository.selectAllConsolesLiveData().observe(this, consoles -> {
+                                if (consoles != null) {
+                                    mConsoleAdapter.swapData(consoles);
+                                }
+
+                                mEmptyView.setVisibility(View.GONE);
+                            });
+                        } else {
+                            mEmptyView.setVisibility(View.GONE);
+                        }
                     } else {
                         mEmptyView.setVisibility(View.VISIBLE);
                     }
@@ -116,7 +132,7 @@ public class ConsoleActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_report:
-                startActivity(new Intent(this, LastActionsActivity.class));
+                startActivity(new Intent(this, SelectReportActivity.class));
                 return true;
             case R.id.action_ip:
                 startActivity(new Intent(this, IPActivity.class));
