@@ -17,6 +17,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="7UP"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/tv_bill_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,6 +56,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
+        android:textAlignment="viewStart"
         android:id="@+id/tv_shift_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -88,6 +90,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_pre_discount"
         android:layout_width="0dp"
@@ -128,6 +131,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_bill_cash"
         android:layout_width="0dp"
@@ -159,6 +163,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView19" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_bill_date"
         android:layout_width="0dp"
@@ -220,6 +225,7 @@
         tools:layout_editor_absoluteX="403dp" />
 
     <TextView
+        android:textAlignment="viewStart"
         android:padding="4dp"
         android:background="@drawable/border_blue"
         style="@style/SmallHeadLineTextView"
@@ -233,6 +239,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_item_quantity"
         android:layout_width="0dp"

@@ -13,6 +13,7 @@ import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.CafeOrder;
 import com.a.ali.playstation.data.model.CafeReport;
 import com.a.ali.playstation.data.model.Console;
+import com.a.ali.playstation.data.model.OutsReport;
 import com.a.ali.playstation.data.model.PlayReport;
 import com.a.ali.playstation.data.model.SummaryReport;
 import com.a.ali.playstation.data.model.User;
@@ -122,6 +123,28 @@ public class AppNetworkRepository extends AppRepository {
                                                  @NonNull String am_pm_end) {
         return new RetrofitRequest<List<SummaryReport>>().enqueue(() ->
                 mRetrofitMethods.summaryReport(
+                        shiftName,
+                        startDate,
+                        startHour,
+                        startMinute,
+                        am_pm_start,
+                        endDate,
+                        endHour,
+                        endMinute,
+                        am_pm_end
+                ));
+    }
+    public LiveData<List<OutsReport>> outsReport(@NonNull String shiftName,
+                                                 @NonNull String startDate,
+                                                 @NonNull String startHour,
+                                                 @NonNull String startMinute,
+                                                 @NonNull String am_pm_start,
+                                                 @NonNull String endDate,
+                                                 @NonNull String endHour,
+                                                 @NonNull String endMinute,
+                                                 @NonNull String am_pm_end) {
+        return new RetrofitRequest<List<OutsReport>>().enqueue(() ->
+                mRetrofitMethods.outsReport(
                         shiftName,
                         startDate,
                         startHour,

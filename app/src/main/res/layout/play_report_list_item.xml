@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:gravity="center"
         android:id="@+id/tv_console_name"
         style="@style/BigHeadLineTextView"
         android:layout_width="0dp"
@@ -76,6 +77,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_shift_name"
         android:layout_width="0dp"
@@ -110,6 +112,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_pre_discount"
         android:layout_width="0dp"
@@ -151,6 +154,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:textAlignment="viewStart"
         style="@style/SmallHeadLineTextView"
         android:id="@+id/tv_bill_cash"
         android:layout_width="0dp"
@@ -181,6 +185,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView19" />
 
     <TextView
+        android:textAlignment="viewStart"
         android:id="@+id/tv_start_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -213,6 +218,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView22" />
 
     <TextView
+        android:textAlignment="viewStart"
         android:id="@+id/tv_end_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

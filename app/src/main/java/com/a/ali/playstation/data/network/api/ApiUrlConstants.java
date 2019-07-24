@@ -13,4 +13,5 @@ public class ApiUrlConstants {
     public static final String PLAY_REPORT_URL = "PlayReport";
     public static final String CAFE_REPORT_URL = "CafeRep";
     public static final String SUMMARY_REPORT_URL = "ShiftSheet";
+    public static final String OUTS_REPORT_URL = "OutsReport";
 }

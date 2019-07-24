@@ -3,6 +3,7 @@ package com.a.ali.playstation.data.network.retrofit;
 import com.a.ali.playstation.data.model.CafeOrder;
 import com.a.ali.playstation.data.model.CafeReport;
 import com.a.ali.playstation.data.model.Console;
+import com.a.ali.playstation.data.model.OutsReport;
 import com.a.ali.playstation.data.model.PlayReport;
 import com.a.ali.playstation.data.model.SummaryReport;
 import com.a.ali.playstation.data.model.User;
@@ -57,4 +58,15 @@ public interface RetrofitMethods {
                                             @Path("endHour") String endHour,
                                             @Path("endMinute") String endMinute,
                                             @Path("am_pm_end") String am_pm_end);
+
+    @GET(ApiUrlConstants.OUTS_REPORT_URL + "/{shiftName}/{startDate}/{startHour}/{startMinute}/{am_pm_start}/{endDate}/{endHour}/{endMinute}/{am_pm_end}")
+    Call<List<OutsReport>> outsReport(@Path("shiftName") String shiftName,
+                                      @Path("startDate") String startDate,
+                                      @Path("startHour") String startHour,
+                                      @Path("startMinute") String startMinute,
+                                      @Path("am_pm_start") String am_pm_start,
+                                      @Path("endDate") String endDate,
+                                      @Path("endHour") String endHour,
+                                      @Path("endMinute") String endMinute,
+                                      @Path("am_pm_end") String am_pm_end);
 }

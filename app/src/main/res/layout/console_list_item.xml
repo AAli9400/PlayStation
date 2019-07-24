@@ -67,6 +67,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView2" />
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/tv_start_date"
             style="@style/HintTextView"
             android:layout_width="0dp"

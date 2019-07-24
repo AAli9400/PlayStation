@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
 import com.a.ali.playstation.data.model.CafeReport;
+import com.a.ali.playstation.data.model.OutsReport;
 import com.a.ali.playstation.data.model.PlayReport;
 import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.reports.adapter.CafeReportAdapter;
+import com.a.ali.playstation.ui.reports.adapter.OutsReportAdapter;
 import com.a.ali.playstation.ui.reports.adapter.PlayReportAdapter;
 import com.a.ali.playstation.ui.reports.adapter.SummaryReportAdapter;
 import com.a.ali.playstation.ui.reports.pdf.ITextGUtil;
@@ -63,6 +65,7 @@ public class SelectReportActivity extends AppCompatActivity {
     private PlayReportAdapter mPlayReportAdapter;
     private CafeReportAdapter mCafeReportAdapter;
     private SummaryReportAdapter mSummaryReportAdapter;
+    private OutsReportAdapter mOutsReportAdapter;
 
     private MenuItem mExportAsPdfMenuItem;
 
@@ -324,6 +327,35 @@ public class SelectReportActivity extends AppCompatActivity {
                     }
                     mLoadingViewUtil.hide();
                 });
+            } else if (checkedReportTypeRadioButtonId == R.id.rb_outs) {
+                mExportAsPdfMenuItem.setVisible(true);
+                mAppNetworkRepository.outsReport(
+                        selectedShiftName,
+                        startDate,
+                        startHour,
+                        startMinute,
+                        amPmStart,
+                        endDate,
+                        endHour,
+                        endMinute,
+                        amPmEnd
+                ).observe(this, outsReports -> {
+                    if (outsReports != null) {
+                        mOutsReportAdapter = new OutsReportAdapter();
+                        mReportRecyclerView.setAdapter(mOutsReportAdapter);
+
+                        mOutsReportAdapter.swapData(outsReports);
+
+                        if (outsReports.isEmpty()) {
+                            mEmptyView.setVisibility(View.VISIBLE);
+                        } else {
+                            mEmptyView.setVisibility(View.GONE);
+                        }
+                    } else {
+                        mEmptyView.setVisibility(View.VISIBLE);
+                    }
+                    mLoadingViewUtil.hide();
+                });
             }
         }
     }
@@ -344,7 +376,8 @@ public class SelectReportActivity extends AppCompatActivity {
                             R.id.rb_cafe ? 8 : 7,
                     getApplication(),
                     mReportTypeRadioGroup.getCheckedRadioButtonId() ==
-                            R.id.rb_cafe ? new CafeReportHelper() : new PlayReportHelper());
+                            R.id.rb_cafe ? new CafeReportHelper() : mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                            R.id.rb_outs ? new OutsReportHelper() : new PlayReportHelper());
             return true;
         } else if (item.getItemId() == android.R.id.home) {
             onBackPressed();
@@ -378,6 +411,8 @@ public class SelectReportActivity extends AppCompatActivity {
             if (mPlayReportAdapter != null) {
                 List<PlayReport> playReports = mPlayReportAdapter.getData();
                 if (playReports != null) {
+                    Double totalPriceBeforeDiscount = 0.0;
+                    Double totalPrice = 0.0;
                     for (PlayReport report : playReports) {
                         table.addCell(new PdfPCell(new Paragraph(report.getPs(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getStart_date(), arialFont)));
@@ -386,7 +421,18 @@ public class SelectReportActivity extends AppCompatActivity {
                         table.addCell(new PdfPCell(new Paragraph(report.getPreDiscount(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getBillCash(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getShift_name(), arialFont)));
+
+                        totalPriceBeforeDiscount += Double.valueOf(report.getPreDiscount());
+                        totalPrice += Double.valueOf(report.getBillCash());
                     }
+
+                    table.addCell(new PdfPCell(new Paragraph("الإجمالي", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPriceBeforeDiscount), arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPrice), arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
                 }
             }
         }
@@ -429,8 +475,13 @@ public class SelectReportActivity extends AppCompatActivity {
                     }
 
                     table.addCell(new PdfPCell(new Paragraph("الإجمالي", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
                     table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPriceBeforeDiscount), arialFont)));
                     table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPrice), arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
                 }
             }
         }
@@ -445,6 +496,45 @@ public class SelectReportActivity extends AppCompatActivity {
             table.addCell(new PdfPCell(new Paragraph("قبل الخصم", arialFont)));
             table.addCell(new PdfPCell(new Paragraph("السعر", arialFont)));
             table.addCell(new PdfPCell(new Paragraph("شيفت", arialFont)));
+            return true;
+        }
+    }
+
+    private class OutsReportHelper implements ITextGUtil.Helper {
+
+        @Override
+        public void setData(PdfPTable table, Font arialFont) {
+            if (mOutsReportAdapter != null) {
+                List<OutsReport> outsReports = mOutsReportAdapter.getData();
+                if (outsReports != null) {
+                    Double totalPrice = 0.0;
+
+                    for (OutsReport report : outsReports) {
+                        table.addCell(new PdfPCell(new Paragraph(report.getOutsType(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getOutsNote(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getOutsVal(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getOutsDate(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getShift_name(), arialFont)));
+
+                        totalPrice += Double.valueOf(report.getOutsVal());
+                    }
+
+                    table.addCell(new PdfPCell(new Paragraph("الإجمالي", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalPrice), arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                    table.addCell(new PdfPCell(new Paragraph("", arialFont)));
+                }
+            }
+        }
+
+        @Override
+        public boolean setHeader(PdfPTable table, Font arialFont) {
+            table.addCell(new PdfPCell(new Paragraph("نوع المصروفات", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("المصروفات", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("المبلغ", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("تاريخ الوردية", arialFont)));
+            table.addCell(new PdfPCell(new Paragraph("مسؤول الوردية", arialFont)));
             return true;
         }
     }

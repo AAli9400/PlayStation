@@ -44,11 +44,15 @@
     <string name="cafe">كافية</string>
     <string name="console">أجهزة</string>
     <string name="date">التاريخ</string>
-    <string name="summary">Summary</string>
+    <string name="summary">ملخص</string>
     <string name="mini_value">Mini Value</string>
     <string name="cafe_value">Cafe Value</string>
     <string name="net_profit">Net Profit</string>
     <string name="play_value">Play Value</string>
     <string name="outs_value">Outs Value</string>
+    <string name="outs">Outs</string>
+    <string name="type">النوع</string>
+    <string name="value">القيمة</string>
+    <string name="notes">ملاحظات</string>
 
 </resources>

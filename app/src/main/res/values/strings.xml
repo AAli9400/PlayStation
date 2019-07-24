@@ -58,4 +58,8 @@
     <string name="net_profit">Net Profit</string>
     <string name="play_value">Play Value</string>
     <string name="outs_value">Outs Value</string>
+    <string name="outs">Outs</string>
+    <string name="type">Type</string>
+    <string name="value">Value</string>
+    <string name="notes">Notes</string>
 </resources>
