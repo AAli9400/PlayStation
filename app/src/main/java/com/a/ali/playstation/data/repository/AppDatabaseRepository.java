@@ -47,7 +47,16 @@ public class AppDatabaseRepository extends AppRepository {
     }
 
     public void insertConsoles(@NonNull List<Console> consoles) {
-        mAppExecutors.executeOnDiskIOThread(() -> mConsoleDao.insertAll(consoles));
+        mAppExecutors.executeOnDiskIOThread(() -> {
+
+
+            mConsoleDao.deleteAll();
+            mConsoleDao.insertAll(consoles);
+        });
+    }
+
+    public void deleteCafeOrders(String device) {
+        mAppExecutors.executeOnDiskIOThread(() -> mCafeDao.deleteAll());
     }
 
     public void deleteAllCafeOrders() {
@@ -55,14 +64,20 @@ public class AppDatabaseRepository extends AppRepository {
     }
 
     public void insertAllCafeOrders(@NonNull List<CafeOrder> cafeOrders) {
-        mAppExecutors.executeOnDiskIOThread(() -> mCafeDao.insertAll(cafeOrders));
+        mAppExecutors.executeOnDiskIOThread(() -> {
+            mCafeDao.insertAll(cafeOrders);
+        });
     }
 
-    public LiveData<List<CafeOrder>> selectOrders(@NonNull int id) {
-        return mCafeDao.selectByConsoleId(id);
+    public LiveData<List<CafeOrder>> selectOrders(@NonNull String code) {
+        return mCafeDao.selectByConsoleCode(code);
     }
 
     public LiveData<Integer> getConsoleId(@NonNull String dev_code) {
         return mConsoleDao.getId(dev_code);
+    }
+
+    public void deleteAllCafeOrders(String consoleCode) {
+        mAppExecutors.executeOnDiskIOThread(() -> mCafeDao.deleteAll(consoleCode));
     }
 }

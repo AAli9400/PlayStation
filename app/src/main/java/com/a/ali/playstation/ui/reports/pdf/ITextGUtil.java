@@ -26,7 +26,7 @@ public class ITextGUtil {
     private ITextGUtil() {
     }
 
-    public static void createPdfFile(int columnNumber, @NonNull Application application, @NonNull Helper helper) {
+    public static void createPdfFile(int columnNumber, @NonNull Application application, @NonNull Helper helper, @NonNull Helper2 helper2) {
         // set up table
         PdfPTable table = new PdfPTable(columnNumber);
 
@@ -38,7 +38,7 @@ public class ITextGUtil {
             helper.setData(table, arialFont);
         }
 
-        File path = new File(Environment.getExternalStorageDirectory(), application.getApplicationInfo().name);
+        File path = new File(Environment.getExternalStorageDirectory(), "Playstation");
         if (!path.exists()) {
             path.mkdir();
         }
@@ -68,30 +68,8 @@ public class ITextGUtil {
             if (layoutDocument != null) {
                 layoutDocument.close();
 
-                openFile(file, application);
+                helper2.openFile(file);
             }
-        }
-    }
-
-    private static void openFile(@NonNull File file, @NonNull Application application) {
-        Intent target = new Intent(Intent.ACTION_VIEW);
-
-
-        String authority = application.getPackageName() + ".fileprovider";
-        target.setDataAndType(FileProvider.getUriForFile(
-                application,
-                authority,
-                file), "application/pdf");
-
-        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        Intent intent = Intent.createChooser(target, "Open File");
-        try {
-            application.startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(application, e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("Exceptionn", e.getMessage());
         }
     }
 
@@ -99,5 +77,10 @@ public class ITextGUtil {
         void setData(PdfPTable pdfPTable, Font font);
 
         boolean setHeader(PdfPTable pdfPTable, Font font);
+    }
+
+    public interface Helper2 {
+        void openFile(@NonNull File file);
+
     }
 }

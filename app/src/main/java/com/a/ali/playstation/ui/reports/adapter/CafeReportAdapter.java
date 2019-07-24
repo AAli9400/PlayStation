@@ -32,7 +32,7 @@ public class CafeReportAdapter extends RecyclerView.Adapter<CafeReportAdapter.Vi
 
         holder.billItemTextView.setText(cafeReport.getBillItem());
 
-        holder.billNumberTextView.setText(cafeReport.getBillNo());
+        holder.billNumberTextView.setText(cafeReport.getBillNO());
 
         holder.shiftNameTextView.setText(cafeReport.getShift_name());
 
@@ -42,7 +42,7 @@ public class CafeReportAdapter extends RecyclerView.Adapter<CafeReportAdapter.Vi
 
         holder.roomTableTextView.setText(cafeReport.getRoom_Table());
 
-        holder.itemQuantityTextView.setText(cafeReport.getItemQt());
+        holder.itemQuantityTextView.setText(cafeReport.getItemQT());
 
         holder.startDateTextView.setText(cafeReport.getBillDate());
     }

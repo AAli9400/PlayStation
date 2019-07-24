@@ -6,29 +6,32 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class CafeOrder {
-    private int consoleId;
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
+    private int id;
+
     private String CItem;
     private String ItemPrice;
     private String ItemQT;
+    private String deviceCode;
 
     public CafeOrder() {
     }
 
-    public CafeOrder(int consoleId, String CItem, String itemPrice, String itemQT) {
-        this.consoleId = consoleId;
+    public CafeOrder(int id, String CItem, String itemPrice, String itemQT, String deviceCode) {
+        this.id = id;
         this.CItem = CItem;
         ItemPrice = itemPrice;
         ItemQT = itemQT;
+        this.deviceCode = deviceCode;
     }
 
-    public int getConsoleId() {
-        return consoleId;
+    public int getId() {
+        return id;
     }
 
-    public void setConsoleId(int consoleId) {
-        this.consoleId = consoleId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCItem() {
@@ -53,5 +56,13 @@ public class CafeOrder {
 
     public void setItemQT(String itemQT) {
         ItemQT = itemQT;
+    }
+
+    public String getDeviceCode() {
+        return deviceCode;
+    }
+
+    public void setDeviceCode(String deviceCode) {
+        this.deviceCode = deviceCode;
     }
 }

@@ -6,18 +6,20 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.a.ali.playstation.data.model.CafeOrder;
-import com.a.ali.playstation.data.model.Console;
 
 import java.util.List;
 
 @Dao
 public interface CafeDao {
-    @Query("SELECT * FROM CafeOrder WHERE consoleId = :consoleId")
-    LiveData<List<CafeOrder>> selectByConsoleId(int consoleId);
+    @Query("SELECT * FROM CafeOrder WHERE deviceCode = :consoleCode")
+    LiveData<List<CafeOrder>> selectByConsoleCode(String consoleCode);
 
     @Insert
     void insertAll(List<CafeOrder> cafeOrders);
 
-    @Query("DELETE FROM CafeOrder WHERE consoleId")
+    @Query("DELETE FROM CafeOrder")
     void deleteAll();
+
+    @Query("DELETE FROM CafeOrder WHERE  deviceCode = :consoleCode")
+    void deleteAll(String consoleCode);
 }

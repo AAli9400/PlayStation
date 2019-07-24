@@ -1,9 +1,12 @@
 package com.a.ali.playstation.ui.reports;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +18,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a.ali.playstation.R;
@@ -36,13 +42,14 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class SelectReportActivity extends AppCompatActivity {
+public class SelectReportActivity extends AppCompatActivity implements ITextGUtil.Helper2 {
     private ConstraintLayout mEmptyView;
     private ImageView mLoadingImageView;
     private AppLoadingViewUtil mLoadingViewUtil;
@@ -67,7 +74,7 @@ public class SelectReportActivity extends AppCompatActivity {
     private SummaryReportAdapter mSummaryReportAdapter;
     private OutsReportAdapter mOutsReportAdapter;
 
-    private MenuItem mExportAsPdfMenuItem;
+    private MaterialButton mPDFMaterialButton;
 
     private boolean mIsReportDataOn = false;
 
@@ -113,6 +120,40 @@ public class SelectReportActivity extends AppCompatActivity {
 
         MaterialButton displayButton = findViewById(R.id.mbtn_go);
         displayButton.setOnClickListener(view1 -> validateReportData());
+
+        mPDFMaterialButton = findViewById(R.id.mbtn_pdf);
+        mPDFMaterialButton.setOnClickListener(view -> {
+            mPDFMaterialButton.setEnabled(false);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            } else generatePDFFile();
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // If request is cancelled, the result arrays are empty.
+        if (requestCode == 100) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                generatePDFFile();
+            }
+        }
+    }
+
+    private void generatePDFFile() {
+        ITextGUtil.createPdfFile(
+                mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                        R.id.rb_cafe ? 8 : 7,
+                getApplication(),
+                mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                        R.id.rb_cafe ? new CafeReportHelper() : mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                        R.id.rb_outs ? new OutsReportHelper() : new PlayReportHelper()
+                , this);
     }
 
     private void loadShifts() {
@@ -152,7 +193,7 @@ public class SelectReportActivity extends AppCompatActivity {
                                     mReportDateFrom = new Date(mReportCalenderFrom.getTimeInMillis());
 
                                     dateFromTextInputLayout.getEditText().setText(
-                                            new SimpleDateFormat("YYYY/MM/DD -- HH:mm")
+                                            new SimpleDateFormat("YYYY/MM/dd -- HH:mm")
                                                     .format(mReportCalenderFrom.getTimeInMillis()));
                                 },
                                 mReportCalenderFrom.get(Calendar.HOUR),
@@ -187,7 +228,7 @@ public class SelectReportActivity extends AppCompatActivity {
                                     mReportDateTo = new Date(mReportCalenderTo.getTimeInMillis());
 
                                     dateToTextInputLayout.getEditText().setText(
-                                            new SimpleDateFormat("YYYY/MM/DD -- HH:mm")
+                                            new SimpleDateFormat("YYYY/MM/dd -- HH:mm")
                                                     .format(mReportCalenderTo.getTimeInMillis()));
                                 },
                                 mReportCalenderTo.get(Calendar.HOUR),
@@ -239,7 +280,6 @@ public class SelectReportActivity extends AppCompatActivity {
             String amPmEnd = endDateString.substring(12, 14);
 
             if (checkedReportTypeRadioButtonId == R.id.rb_playstation) {
-                mExportAsPdfMenuItem.setVisible(true);
                 mAppNetworkRepository.playReport(
                         selectedShiftName,
                         startDate,
@@ -252,6 +292,8 @@ public class SelectReportActivity extends AppCompatActivity {
                         amPmEnd
                 ).observe(this, playReports -> {
                     if (playReports != null) {
+                         mPDFMaterialButton.setVisibility(View.VISIBLE);
+
                         mPlayReportAdapter = new PlayReportAdapter();
                         mReportRecyclerView.setAdapter(mPlayReportAdapter);
 
@@ -269,7 +311,6 @@ public class SelectReportActivity extends AppCompatActivity {
                     mLoadingViewUtil.hide();
                 });
             } else if (checkedReportTypeRadioButtonId == R.id.rb_cafe) {
-                mExportAsPdfMenuItem.setVisible(true);
                 mAppNetworkRepository.cafeReport(
                         selectedCafeType,
                         selectedShiftName,
@@ -283,6 +324,8 @@ public class SelectReportActivity extends AppCompatActivity {
                         amPmEnd
                 ).observe(this, cafeReports -> {
                     if (cafeReports != null) {
+                        mPDFMaterialButton.setVisibility(View.VISIBLE);
+
                         mCafeReportAdapter = new CafeReportAdapter();
                         mReportRecyclerView.setAdapter(mCafeReportAdapter);
 
@@ -299,7 +342,6 @@ public class SelectReportActivity extends AppCompatActivity {
                     mLoadingViewUtil.hide();
                 });
             } else if (checkedReportTypeRadioButtonId == R.id.rb_summary) {
-                mExportAsPdfMenuItem.setVisible(false);
                 mAppNetworkRepository.summaryReport(
                         selectedShiftName,
                         startDate,
@@ -311,6 +353,8 @@ public class SelectReportActivity extends AppCompatActivity {
                         endMinute,
                         amPmEnd
                 ).observe(this, summaryReports -> {
+                    mPDFMaterialButton.setVisibility(View.INVISIBLE);
+
                     if (summaryReports != null) {
                         mSummaryReportAdapter = new SummaryReportAdapter();
                         mReportRecyclerView.setAdapter(mSummaryReportAdapter);
@@ -328,7 +372,6 @@ public class SelectReportActivity extends AppCompatActivity {
                     mLoadingViewUtil.hide();
                 });
             } else if (checkedReportTypeRadioButtonId == R.id.rb_outs) {
-                mExportAsPdfMenuItem.setVisible(true);
                 mAppNetworkRepository.outsReport(
                         selectedShiftName,
                         startDate,
@@ -341,6 +384,8 @@ public class SelectReportActivity extends AppCompatActivity {
                         amPmEnd
                 ).observe(this, outsReports -> {
                     if (outsReports != null) {
+                        mPDFMaterialButton.setVisibility(View.VISIBLE);
+
                         mOutsReportAdapter = new OutsReportAdapter();
                         mReportRecyclerView.setAdapter(mOutsReportAdapter);
 
@@ -361,25 +406,8 @@ public class SelectReportActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.report_menu, menu);
-        mExportAsPdfMenuItem = menu.findItem(R.id.action_pdf);
-        mExportAsPdfMenuItem.setVisible(false);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_pdf) {
-            ITextGUtil.createPdfFile(
-                    mReportTypeRadioGroup.getCheckedRadioButtonId() ==
-                            R.id.rb_cafe ? 8 : 7,
-                    getApplication(),
-                    mReportTypeRadioGroup.getCheckedRadioButtonId() ==
-                            R.id.rb_cafe ? new CafeReportHelper() : mReportTypeRadioGroup.getCheckedRadioButtonId() ==
-                            R.id.rb_outs ? new OutsReportHelper() : new PlayReportHelper());
-            return true;
-        } else if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -399,9 +427,34 @@ public class SelectReportActivity extends AppCompatActivity {
             mSummaryReportAdapter = null;
 
             mEmptyView.setVisibility(View.GONE);
+            mPDFMaterialButton.setVisibility(View.GONE);
 
             mIsReportDataOn = false;
         } else super.onBackPressed();
+    }
+
+    @Override
+    public void openFile(@NonNull File file) {
+        Intent target = new Intent(Intent.ACTION_VIEW);
+
+        String authority = getPackageName() + ".fileprovider";
+        target.setDataAndType(FileProvider.getUriForFile(
+                this,
+                authority,
+                file), "application/pdf");
+
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent intent = Intent.createChooser(target, "Open File");
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("Exceptionn", e.getMessage());
+        }
+
+        mPDFMaterialButton.setEnabled(true);
     }
 
     private class PlayReportHelper implements ITextGUtil.Helper {
@@ -461,11 +514,11 @@ public class SelectReportActivity extends AppCompatActivity {
                     Double totalPrice = 0.0;
 
                     for (CafeReport report : cafeReports) {
-                        table.addCell(new PdfPCell(new Paragraph(report.getBillNo(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getBillNO(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getRoom_Table(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getBillDate(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getBillItem(), arialFont)));
-                        table.addCell(new PdfPCell(new Paragraph(report.getItemQt(), arialFont)));
+                        table.addCell(new PdfPCell(new Paragraph(report.getItemQT(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getPreDiscount(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getBillCash(), arialFont)));
                         table.addCell(new PdfPCell(new Paragraph(report.getShift_name(), arialFont)));

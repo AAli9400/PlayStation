@@ -1,6 +1,7 @@
 package com.a.ali.playstation.ui.console.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_FINISH;
+import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_FINISH_TRANSFORMING;
 import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_MULTI;
 import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_PLAYING;
 import static com.a.ali.playstation.data.model.Console.CONSOLE_STATUS_SINGLE;
@@ -34,7 +36,8 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
     private AppDatabaseRepository mAppDatabaseRepository;
     private AppCompatActivity mOwnerFragment;
 
-    private List<Console> mConsoles = null;
+    private List<Console> mConsolesList = null;
+    private List<Console> mConsolesTransformingList = null;
 
     private boolean mForLog;
 
@@ -58,7 +61,26 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Console console = mConsoles.get(position);
+        Console console = mConsolesList.get(position);
+
+        Log.v("eeererwfe", console.getDev_code());
+
+        List<Console> temp = haveDetails(console);
+
+        if (temp.size() > 0) {
+            holder.detailsButton.setVisibility(View.VISIBLE);
+            holder.detailsButton.setOnClickListener(view ->
+                    AppDialog.show(mContext, R.layout.console_details_dialog, (dialogView, dialog) -> {
+                        RecyclerView ordersRecyclerView = dialogView.findViewById(R.id.recyclerview);
+
+                        ConsoleDetailsAdapter consoleDetailsAdapter = new ConsoleDetailsAdapter(mContext);
+                        ordersRecyclerView.setAdapter(consoleDetailsAdapter);
+
+                        consoleDetailsAdapter.swapData(temp);
+                    }));
+        } else {
+            holder.detailsButton.setVisibility(View.GONE);
+        }
 
         if (!mForLog) {
             mAppNetworkRepository.loadOrders(console.getDev_code())
@@ -99,16 +121,27 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
         holder.moneyTextView.setText(console.getDepositCash());
 
 
+        if (mForLog) {
+            mAppDatabaseRepository.selectOrders(console.getDev_code())
+                    .observe(mOwnerFragment, cafeOrders -> {
+                        if (cafeOrders == null || cafeOrders.isEmpty()) {
+                            holder.ordersButton.setVisibility(View.GONE);
+                        } else {
+                            holder.ordersButton.setVisibility(View.VISIBLE);
+                        }
+                    });
+        }
+
         holder.ordersButton.setOnClickListener(view -> {
             if (!mForLog) {
                 showOrdersDialog(console.getDev_code());
             } else {
-                loadOrdersFromDatabase(console.getDev_code());
+                loadOrdersFromDatabase(console.getDev_code(), holder.ordersButton);
             }
         });
     }
 
-    private void loadOrdersFromDatabase(String dev_code) {
+    private void loadOrdersFromDatabase(String dev_code, MaterialButton ordersButton) {
         AppDialog.show(mContext, R.layout.cafe_orders_dialog, (view, dialog) -> {
 
             TextView consoleCodeTextView = view.findViewById(R.id.tv_console_name);
@@ -119,24 +152,23 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
             OrderAdapter orderAdapter = new OrderAdapter(mContext);
             ordersRecyclerView.setAdapter(orderAdapter);
 
-            mAppDatabaseRepository.getConsoleId(dev_code)
-                    .observe(mOwnerFragment, integer -> {
-                        if (integer != null) {
-                            mAppDatabaseRepository.selectOrders(integer)
-                                    .observe(mOwnerFragment, cafeOrders -> {
-                                        if (cafeOrders != null) {
-                                            double price = orderAdapter.swapData(cafeOrders);
-                                            ((TextView) view.findViewById(R.id.tv_total_cafe_order))
-                                                    .setText(String.valueOf(price));
+            mAppDatabaseRepository.selectOrders(dev_code)
+                    .observe(mOwnerFragment, cafeOrders -> {
+//                        if (cafeOrders == null || cafeOrders.isEmpty()) {
+//                            ordersButton.setVisibility(View.GONE);
+//                        } else {
+//                            ordersButton.setVisibility(View.VISIBLE);
+//                        }
+                        if (cafeOrders != null) {
+                            double price = orderAdapter.swapData(cafeOrders);
+                            ((TextView) view.findViewById(R.id.tv_total_cafe_order))
+                                    .setText(String.valueOf(price));
 
-                                        } else {
-                                            dialog.dismiss();
-                                        }
-                                    });
+                        } else {
+                            dialog.dismiss();
                         }
                     });
         });
-
     }
 
     private void showOrdersDialog(String consoleCode) {
@@ -166,11 +198,12 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mConsoles != null ? mConsoles.size() : 0;
+        return mConsolesList != null ? mConsolesList.size() : 0;
     }
 
     public void swapData(@NonNull List<Console> consoles) {
         ArrayList<Console> consoleArrayList = new ArrayList<>();
+        ArrayList<Console> consoleTransformingArrayList = new ArrayList<>();
         for (Console console : consoles) {
             if (console.getState().equals(CONSOLE_STATUS_PLAYING)) consoleArrayList.add(console);
         }
@@ -179,13 +212,31 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
             if (console.getState().equals(CONSOLE_STATUS_FINISH)) consoleArrayList.add(console);
         }
 
-        mConsoles = consoleArrayList;
+        for (Console console : consoles) {
+            if (console.getState().equals(CONSOLE_STATUS_FINISH_TRANSFORMING))
+                consoleTransformingArrayList.add(console);
+        }
+
+        mConsolesList = consoleArrayList;
+        mConsolesTransformingList = consoleTransformingArrayList;
 
         notifyDataSetChanged();
     }
 
+    private List<Console> haveDetails(Console consoleCode) {
+        ArrayList<Console> list = new ArrayList<>();
+        for (Console console : mConsolesTransformingList) {
+            if (console.getDev_code().equals(consoleCode.getDev_code())) {
+                list.add(console);
+            }
+        }
+
+        list.add(consoleCode);
+        return list;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
-        MaterialButton ordersButton;
+        MaterialButton ordersButton, detailsButton;
         ConstraintLayout detailsConstraintLayout;
         ImageView consoleStatusImageView, multiImageView;
         TextView consoleNameTextView, singleOrMultiTextView, consoleStartDate, moneyTextView;
@@ -194,6 +245,7 @@ public class ConsoleAdapter extends RecyclerView.Adapter<ConsoleAdapter.ViewHold
             super(itemView);
 
             ordersButton = itemView.findViewById(R.id.mbtn_orders);
+            detailsButton = itemView.findViewById(R.id.mbtn_details);
             detailsConstraintLayout = itemView.findViewById(R.id.cl_console_details);
             consoleStatusImageView = itemView.findViewById(R.id.iv_console_status);
             multiImageView = itemView.findViewById(R.id.iv_multi_icon);

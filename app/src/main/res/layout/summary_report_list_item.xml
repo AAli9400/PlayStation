@@ -44,8 +44,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier3"
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
@@ -175,61 +177,5 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_play_value"
         app:layout_constraintStart_toStartOf="@+id/tv_play_value"
         app:layout_constraintTop_toTopOf="@+id/textView34" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_cafe_val"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_cafe_val"
-        app:layout_constraintTop_toTopOf="@+id/tv_cafe_val"
-        app:srcCompat="@drawable/ic_money" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_mini_val"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_mini_val"
-        app:layout_constraintTop_toTopOf="@+id/tv_mini_val"
-        app:srcCompat="@drawable/ic_money" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_play_value"
-        app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_play_value"
-        app:layout_constraintTop_toTopOf="@+id/tv_play_value"
-        app:srcCompat="@drawable/ic_money" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_outs_val"
-        app:layout_constraintEnd_toEndOf="@+id/imageView11"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_outs_val"
-        app:layout_constraintTop_toTopOf="@+id/tv_outs_val"
-        app:srcCompat="@drawable/ic_money" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_net_profit"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_net_profit"
-        app:layout_constraintTop_toTopOf="@+id/tv_net_profit"
-        app:srcCompat="@drawable/ic_money" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

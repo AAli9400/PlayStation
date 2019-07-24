@@ -11,7 +11,7 @@
     <string name="no_internet_connection">تأكد من اتصالك بالإنترنت</string>
     <string name="cafe_orders">طلبات المقهي</string>
     <string name="start_date">وقت البداية</string>
-    <string name="single_or_multi">زوجي أم فردي ؟</string>
+    <string name="single_or_multi">زوجي_فردي</string>
     <string name="username_required">إسم المستخدم مطلوب.</string>
     <string name="password_required">كلمة المرور مطلوبة.</string>
     <string name="date_from_required">تاريخ البداية مطلوب.</string>
@@ -54,5 +54,7 @@
     <string name="type">النوع</string>
     <string name="value">القيمة</string>
     <string name="notes">ملاحظات</string>
+    <string name="create_pdf_file">Create PDF File</string>
+    <string name="details">Details</string>
 
 </resources>

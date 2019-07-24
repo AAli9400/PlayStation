@@ -38,10 +38,10 @@ public class OutsReportAdapter extends RecyclerView.Adapter<OutsReportAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mOutsReportsList == null ? 0 : mOutsReportsList.size();
     }
 
-    public void swapData(List<OutsReport> outsReports) {
+    public void swapData(@NonNull List<OutsReport> outsReports) {
         mOutsReportsList = outsReports;
 
         notifyDataSetChanged();

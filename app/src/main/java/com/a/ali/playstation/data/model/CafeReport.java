@@ -2,25 +2,25 @@ package com.a.ali.playstation.data.model;
 
 public class CafeReport {
     private String BillCash;
-    private String ItemQt;
+    private String ItemQT;
     private String Room_Table;
     private String Shift_name;
     private String billDate;
     private String billItem;
-    private String billNo;
+    private String billNO;
     private String preDiscount;
 
     public CafeReport() {
     }
 
-    public CafeReport(String billCash, String itemQt, String room_Table, String shift_name, String billDate, String billItem, String billNo, String preDiscount) {
+    public CafeReport(String billCash, String itemQT, String room_Table, String shift_name, String billDate, String billItem, String billNO, String preDiscount) {
         BillCash = billCash;
-        ItemQt = itemQt;
+        ItemQT = itemQT;
         Room_Table = room_Table;
         Shift_name = shift_name;
         this.billDate = billDate;
         this.billItem = billItem;
-        this.billNo = billNo;
+        this.billNO = billNO;
         this.preDiscount = preDiscount;
     }
 
@@ -32,12 +32,12 @@ public class CafeReport {
         BillCash = billCash;
     }
 
-    public String getItemQt() {
-        return ItemQt;
+    public String getItemQT() {
+        return ItemQT;
     }
 
-    public void setItemQt(String itemQt) {
-        ItemQt = itemQt;
+    public void setItemQT(String itemQT) {
+        ItemQT = itemQT;
     }
 
     public String getRoom_Table() {
@@ -72,12 +72,12 @@ public class CafeReport {
         this.billItem = billItem;
     }
 
-    public String getBillNo() {
-        return billNo;
+    public String getBillNO() {
+        return billNO;
     }
 
-    public void setBillNo(String billNo) {
-        this.billNo = billNo;
+    public void setBillNO(String billNO) {
+        this.billNO = billNO;
     }
 
     public String getPreDiscount() {

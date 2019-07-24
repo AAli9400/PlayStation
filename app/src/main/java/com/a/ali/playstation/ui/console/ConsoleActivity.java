@@ -1,5 +1,13 @@
 package com.a.ali.playstation.ui.console;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,15 +17,8 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-
 import com.a.ali.playstation.R;
+import com.a.ali.playstation.data.database.util.ConsoleLogService;
 import com.a.ali.playstation.data.database.util.ConsoleLogWorkerManager;
 import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppDatabaseRepository;
@@ -25,6 +26,7 @@ import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
 import com.a.ali.playstation.ui.ip.IPActivity;
 import com.a.ali.playstation.ui.lastActions.LastActionsActivity;
+import com.a.ali.playstation.ui.reports.SelectReportActivity;
 import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -61,7 +63,7 @@ public class ConsoleActivity extends AppCompatActivity {
 
         mConsolesRecyclerView = findViewById(R.id.recyclerview);
 
-        mConsoleAdapter = new ConsoleAdapter(this, mAppNetworkRepository, this, false, null);
+        mConsoleAdapter = new ConsoleAdapter(this, mAppNetworkRepository, this, false, AppDatabaseRepository.getInstance(getApplication()));
         mConsolesRecyclerView.setAdapter(mConsoleAdapter);
 
         loadConsoles();
@@ -87,6 +89,9 @@ public class ConsoleActivity extends AppCompatActivity {
         mAppNetworkRepository.loadConsoles()
                 .observe(this, response -> {
                     if (response != null) {
+
+                        startService(new Intent(this, ConsoleLogService.class));
+
                         mConsoleAdapter.swapData(response);
 
                         mEmptyView.setVisibility(View.GONE);
@@ -116,7 +121,7 @@ public class ConsoleActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_report:
-                startActivity(new Intent(this, LastActionsActivity.class));
+                startActivity(new Intent(this, SelectReportActivity.class));
                 return true;
             case R.id.action_ip:
                 startActivity(new Intent(this, IPActivity.class));

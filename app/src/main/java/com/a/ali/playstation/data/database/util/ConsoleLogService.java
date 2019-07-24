@@ -44,6 +44,7 @@ public class ConsoleLogService extends IntentService {
 
                     databaseRepository.insertConsoles(consoles);
 
+                    AppExecutors.getInstance().executeOnDiskIOThread(() -> {
                     List<Console> addedConsoles = databaseRepository.selectAllConsoles();
 
                     for (int i = 0; i < addedConsoles.size(); i++) {
@@ -59,10 +60,11 @@ public class ConsoleLogService extends IntentService {
                                             AppExecutors.getInstance().executeOnDiskIOThread(() -> {
                                                 for (int j = 0; j < ordersList.size(); j++) {
                                                     CafeOrder order = ordersList.get(j);
-                                                    order.setConsoleId(console.getId());
+                                                    order.setDeviceCode(console.getDev_code());
                                                     ordersList.set(j,order);
                                                 }
 
+                                                databaseRepository.deleteAllCafeOrders(console.getDev_code());
                                                 databaseRepository.insertAllCafeOrders(ordersList);
                                             });
 //
@@ -76,6 +78,7 @@ public class ConsoleLogService extends IntentService {
                                 });
 
                     }
+                });
 
                 }
                 //else do nothing

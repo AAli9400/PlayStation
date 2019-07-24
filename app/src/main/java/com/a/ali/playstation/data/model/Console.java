@@ -21,10 +21,16 @@ public class Console {
 
     @Ignore
     public static final String CONSOLE_STATUS_FINISH = "finish";
+
     @Ignore
     public static final String CONSOLE_STATUS_PLAYING = "playing";
+
+    @Ignore
+    public static final String CONSOLE_STATUS_FINISH_TRANSFORMING = "finish transforming";
+
     @Ignore
     public static final String CONSOLE_STATUS_SINGLE = "single";
+
     @Ignore
     public static final String CONSOLE_STATUS_MULTI = "multi";
 

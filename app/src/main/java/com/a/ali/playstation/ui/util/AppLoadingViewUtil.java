@@ -27,11 +27,11 @@ public class AppLoadingViewUtil {
 
     public void show() {
         mLoadingImageView.setVisibility(View.VISIBLE);
-        mLogoAnimatable2Compat.start();
+//        mLogoAnimatable2Compat.start();
     }
 
     public void hide() {
-        mLogoAnimatable2Compat.stop();
+//        mLogoAnimatable2Compat.stop();
         mLoadingImageView.setVisibility(View.GONE);
     }
 }
