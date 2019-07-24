@@ -262,8 +262,7 @@ public class SelectReportActivity extends AppCompatActivity {
 
                     mLoadingViewUtil.hide();
                 });
-            }
-            else if (checkedReportTypeRadioButtonId == R.id.rb_cafe) {
+            } else if (checkedReportTypeRadioButtonId == R.id.rb_cafe) {
                 mExportAsPdfMenuItem.setVisible(true);
                 mAppNetworkRepository.cafeReport(
                         selectedCafeType,
@@ -293,8 +292,7 @@ public class SelectReportActivity extends AppCompatActivity {
                     }
                     mLoadingViewUtil.hide();
                 });
-            }
-            else if (checkedReportTypeRadioButtonId == R.id.rb_summary) {
+            } else if (checkedReportTypeRadioButtonId == R.id.rb_summary) {
                 mExportAsPdfMenuItem.setVisible(false);
                 mAppNetworkRepository.summaryReport(
                         selectedShiftName,
@@ -330,6 +328,7 @@ public class SelectReportActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.report_menu, menu);
+        mExportAsPdfMenuItem = menu.findItem(R.id.action_pdf);
         mExportAsPdfMenuItem.setVisible(false);
         return true;
     }
