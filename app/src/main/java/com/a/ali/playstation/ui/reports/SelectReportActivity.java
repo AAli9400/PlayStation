@@ -66,6 +66,8 @@ public class SelectReportActivity extends AppCompatActivity {
 
     private MenuItem mExportAsPdfMenuItem;
 
+    private boolean mIsReportDataOn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +98,7 @@ public class SelectReportActivity extends AppCompatActivity {
             if (i == R.id.rb_cafe) {
                 mCafeTypeSpinner.setVisibility(View.VISIBLE);
                 mOpenSpinnerImageView.setVisibility(View.VISIBLE);
-            } else if (i == R.id.rb_playstation) {
+            } else {
                 mCafeTypeSpinner.setVisibility(View.GONE);
                 mOpenSpinnerImageView.setVisibility(View.GONE);
             }
@@ -111,17 +113,17 @@ public class SelectReportActivity extends AppCompatActivity {
     }
 
     private void loadShifts() {
+        ArrayList<String> usernames = new ArrayList<>();
+        usernames.add(getString(R.string.all));
         mAppNetworkRepository.getAllUsers().observe(this, users -> {
             if (users != null) {
-                ArrayList<String> usernames = new ArrayList<>();
-                usernames.add(getString(R.string.all));
                 for (User user : users) {
                     usernames.add(user.getUserN());
                 }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usernames);
-                mShiftSpinner.setAdapter(adapter);
             }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usernames);
+            mShiftSpinner.setAdapter(adapter);
         });
     }
 
@@ -209,6 +211,7 @@ public class SelectReportActivity extends AppCompatActivity {
         } else if (mReportDateTo == null) {
             Toast.makeText(this, getString(R.string.date_to_required), Toast.LENGTH_LONG).show();
         } else {
+            mIsReportDataOn = true;
             mLoadingViewUtil.show();
 
             mReportDetailsConstraintLayout.setVisibility(View.GONE);
@@ -343,8 +346,29 @@ public class SelectReportActivity extends AppCompatActivity {
                     mReportTypeRadioGroup.getCheckedRadioButtonId() ==
                             R.id.rb_cafe ? new CafeReportHelper() : new PlayReportHelper());
             return true;
+        } else if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mIsReportDataOn) {
+            mReportDetailsConstraintLayout.setVisibility(View.VISIBLE);
+            mReportRecyclerView.setVisibility(View.GONE);
+
+            mReportRecyclerView.setAdapter(null);
+
+            mCafeReportAdapter = null;
+            mPlayReportAdapter = null;
+            mSummaryReportAdapter = null;
+
+            mEmptyView.setVisibility(View.GONE);
+
+            mIsReportDataOn = false;
+        } else super.onBackPressed();
     }
 
     private class PlayReportHelper implements ITextGUtil.Helper {
