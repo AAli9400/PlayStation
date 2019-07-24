@@ -17,8 +17,8 @@
             style="@style/SmallHeadLineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Shift:"
+            android:layout_marginStart="8dp"
+            android:text="@string/shift"
             app:layout_constraintBottom_toBottomOf="@+id/s_shift"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/s_shift" />
@@ -30,7 +30,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/barrier2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,10 +51,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:checkedButton="@id/rb_playstation"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/s_shift"
             app:layout_constraintStart_toEndOf="@+id/barrier2"
             app:layout_constraintTop_toBottomOf="@+id/s_shift">
 
@@ -65,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Playstation" />
+                android:text="@string/console" />
 
             <RadioButton
                 android:id="@+id/rb_cafe"
@@ -74,7 +73,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Cafe" />
+                android:text="@string/cafe" />
+
+            <RadioButton
+                android:id="@+id/rb_summary"
+                style="@style/SmallHeadLineTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/summary" />
         </RadioGroup>
 
         <Spinner
@@ -86,7 +95,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/rg_report_type"
             app:layout_constraintStart_toStartOf="@+id/rg_report_type"
-            app:layout_constraintTop_toBottomOf="@+id/rg_report_type" />
+            app:layout_constraintTop_toBottomOf="@+id/rg_report_type"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_open_spinner2"
@@ -97,18 +107,17 @@
             app:layout_constraintBottom_toBottomOf="@+id/s_cafe_type"
             app:layout_constraintEnd_toEndOf="@+id/s_cafe_type"
             app:layout_constraintTop_toTopOf="@+id/s_cafe_type"
-            app:srcCompat="@drawable/ic_spinner_arrow_down" />
-
+            app:srcCompat="@drawable/ic_spinner_arrow_down"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/textView"
             style="@style/SmallHeadLineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="From:"
+            android:text="@string/from"
             app:layout_constraintBottom_toBottomOf="@+id/til_from_date"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="@+id/til_from_date" />
 
         <TextView
@@ -116,7 +125,7 @@
             style="@style/SmallHeadLineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To:"
+            android:text="@string/to"
             app:layout_constraintBottom_toBottomOf="@+id/til_to_date"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toTopOf="@+id/til_to_date" />
@@ -127,7 +136,7 @@
             android:layout_height="wrap_content"
             app:barrierDirection="end"
             app:constraint_referenced_ids="textView9,textView,textView8"
-            tools:layout_editor_absoluteX="411dp" />
+            tools:layout_editor_absoluteX="61dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_from_date"
@@ -136,15 +145,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/s_cafe_type"
             app:layout_constraintStart_toEndOf="@+id/barrier2"
             app:layout_constraintTop_toBottomOf="@+id/s_cafe_type">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date" />
+                android:hint="@string/date" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -154,15 +162,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/til_from_date"
             app:layout_constraintStart_toEndOf="@+id/barrier2"
             app:layout_constraintTop_toBottomOf="@+id/til_from_date">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date" />
+                android:hint="@string/date" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -171,14 +178,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             android:text="@string/display"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_to_date"
+            app:layout_constraintTop_toBottomOf="@+id/view_to_date"
             app:layout_constraintVertical_bias="0.0" />
 
         <View
@@ -199,6 +206,7 @@
             app:layout_constraintEnd_toEndOf="@+id/til_to_date"
             app:layout_constraintStart_toStartOf="@+id/til_to_date"
             app:layout_constraintTop_toTopOf="@+id/til_to_date" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

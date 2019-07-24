@@ -12,4 +12,5 @@ public class ApiUrlConstants {
     public static final String LOAD_ORDERS_URL = "GetminiOrder";
     public static final String PLAY_REPORT_URL = "PlayReport";
     public static final String CAFE_REPORT_URL = "CafeRep";
+    public static final String SUMMARY_REPORT_URL = "ShiftSheet";
 }

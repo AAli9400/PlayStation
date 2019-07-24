@@ -37,5 +37,18 @@
     <string name="last_actions">اخر النشاطات</string>
     <string name="reset_ip">Reset IP Address</string>
     <string name="export_as_pdf">إستخراج ملف pdf</string>
+    <string name="report_type">نوع التقرير</string>
+    <string name="shift">وردية</string>
+    <string name="from">من</string>
+    <string name="to">إلي</string>
+    <string name="cafe">كافية</string>
+    <string name="console">أجهزة</string>
+    <string name="date">التاريخ</string>
+    <string name="summary">Summary</string>
+    <string name="mini_value">Mini Value</string>
+    <string name="cafe_value">Cafe Value</string>
+    <string name="net_profit">Net Profit</string>
+    <string name="play_value">Play Value</string>
+    <string name="outs_value">Outs Value</string>
 
 </resources>

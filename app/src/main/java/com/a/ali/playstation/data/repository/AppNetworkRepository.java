@@ -14,6 +14,7 @@ import com.a.ali.playstation.data.model.CafeOrder;
 import com.a.ali.playstation.data.model.CafeReport;
 import com.a.ali.playstation.data.model.Console;
 import com.a.ali.playstation.data.model.PlayReport;
+import com.a.ali.playstation.data.model.SummaryReport;
 import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.network.api.ApiUrlConstants;
 import com.a.ali.playstation.data.network.networkUtil.AppNetworkConnectivityUtil;
@@ -110,7 +111,33 @@ public class AppNetworkRepository extends AppRepository {
                         endDate, endHour, endMinute, am_pm_end));
     }
 
+    public LiveData<List<SummaryReport>> summaryReport(@NonNull String shiftName,
+                                                 @NonNull String startDate,
+                                                 @NonNull String startHour,
+                                                 @NonNull String startMinute,
+                                                 @NonNull String am_pm_start,
+                                                 @NonNull String endDate,
+                                                 @NonNull String endHour,
+                                                 @NonNull String endMinute,
+                                                 @NonNull String am_pm_end) {
+        return new RetrofitRequest<List<SummaryReport>>().enqueue(() ->
+                mRetrofitMethods.summaryReport(
+                        shiftName,
+                        startDate,
+                        startHour,
+                        startMinute,
+                        am_pm_start,
+                        endDate,
+                        endHour,
+                        endMinute,
+                        am_pm_end
+                ));
+    }
+
     private class RetrofitRequest<T> {
+        public RetrofitRequest() {
+        }
+
         MutableLiveData<T> enqueue(RetrofitCall<T> retrofitCall) {
             MutableLiveData<T> responseLiveData = new MutableLiveData<>();
             if (isDeviceConnectedToTheInternet())

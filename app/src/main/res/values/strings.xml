@@ -45,4 +45,17 @@
     <string name="last_actions">Last Actions</string>
     <string name="reset_ip">Reset IP Address</string>
     <string name="export_as_pdf">Export as pdf</string>
+    <string name="report_type">Report Type</string>
+    <string name="shift">Shift</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="cafe">Cafe</string>
+    <string name="console">Console</string>
+    <string name="date">Date</string>
+    <string name="summary">Summary</string>
+    <string name="mini_value">Mini Value</string>
+    <string name="cafe_value">Cafe Value</string>
+    <string name="net_profit">Net Profit</string>
+    <string name="play_value">Play Value</string>
+    <string name="outs_value">Outs Value</string>
 </resources>

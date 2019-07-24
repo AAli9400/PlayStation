@@ -24,6 +24,7 @@ import com.a.ali.playstation.data.model.User;
 import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.reports.adapter.CafeReportAdapter;
 import com.a.ali.playstation.ui.reports.adapter.PlayReportAdapter;
+import com.a.ali.playstation.ui.reports.adapter.SummaryReportAdapter;
 import com.a.ali.playstation.ui.reports.pdf.ITextGUtil;
 import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 import com.google.android.material.button.MaterialButton;
@@ -61,6 +62,9 @@ public class SelectReportActivity extends AppCompatActivity {
 
     private PlayReportAdapter mPlayReportAdapter;
     private CafeReportAdapter mCafeReportAdapter;
+    private SummaryReportAdapter mSummaryReportAdapter;
+
+    private MenuItem mExportAsPdfMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +233,7 @@ public class SelectReportActivity extends AppCompatActivity {
             String amPmEnd = endDateString.substring(12, 14);
 
             if (checkedReportTypeRadioButtonId == R.id.rb_playstation) {
+                mExportAsPdfMenuItem.setVisible(true);
                 mAppNetworkRepository.playReport(
                         selectedShiftName,
                         startDate,
@@ -257,7 +262,9 @@ public class SelectReportActivity extends AppCompatActivity {
 
                     mLoadingViewUtil.hide();
                 });
-            } else if (checkedReportTypeRadioButtonId == R.id.rb_cafe) {
+            }
+            else if (checkedReportTypeRadioButtonId == R.id.rb_cafe) {
+                mExportAsPdfMenuItem.setVisible(true);
                 mAppNetworkRepository.cafeReport(
                         selectedCafeType,
                         selectedShiftName,
@@ -287,12 +294,43 @@ public class SelectReportActivity extends AppCompatActivity {
                     mLoadingViewUtil.hide();
                 });
             }
+            else if (checkedReportTypeRadioButtonId == R.id.rb_summary) {
+                mExportAsPdfMenuItem.setVisible(false);
+                mAppNetworkRepository.summaryReport(
+                        selectedShiftName,
+                        startDate,
+                        startHour,
+                        startMinute,
+                        amPmStart,
+                        endDate,
+                        endHour,
+                        endMinute,
+                        amPmEnd
+                ).observe(this, summaryReports -> {
+                    if (summaryReports != null) {
+                        mSummaryReportAdapter = new SummaryReportAdapter();
+                        mReportRecyclerView.setAdapter(mSummaryReportAdapter);
+
+                        mSummaryReportAdapter.swapData(summaryReports);
+
+                        if (summaryReports.isEmpty()) {
+                            mEmptyView.setVisibility(View.VISIBLE);
+                        } else {
+                            mEmptyView.setVisibility(View.GONE);
+                        }
+                    } else {
+                        mEmptyView.setVisibility(View.VISIBLE);
+                    }
+                    mLoadingViewUtil.hide();
+                });
+            }
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.report_menu, menu);
+        mExportAsPdfMenuItem.setVisible(false);
         return true;
     }
 
