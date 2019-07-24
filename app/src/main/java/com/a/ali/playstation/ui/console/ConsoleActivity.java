@@ -26,6 +26,7 @@ import com.a.ali.playstation.data.repository.AppNetworkRepository;
 import com.a.ali.playstation.ui.console.adapter.ConsoleAdapter;
 import com.a.ali.playstation.ui.ip.IPActivity;
 import com.a.ali.playstation.ui.lastActions.LastActionsActivity;
+import com.a.ali.playstation.ui.login.LoginActivity;
 import com.a.ali.playstation.ui.reports.SelectReportActivity;
 import com.a.ali.playstation.ui.util.AppLoadingViewUtil;
 
@@ -135,6 +136,9 @@ public class ConsoleActivity extends AppCompatActivity {
                 getSharedPreferences(getString(R.string.user_shared_preferences_name), Context.MODE_PRIVATE)
                         .edit().clear().apply();
                 WorkManager.getInstance(this).cancelAllWork();
+
+                startActivity(new Intent(this, LoginActivity.class));
+
                 this.finish();
                 return true;
 

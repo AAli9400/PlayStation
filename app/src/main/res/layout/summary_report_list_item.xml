@@ -23,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:text="@string/cafe_value"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_cafe_val"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tv_cafe_val" />
 
     <TextView
         android:id="@+id/textView11"
@@ -44,22 +44,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/border_blue"
+        android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        android:textColor="#00C853"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier3"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView25"
         style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/mini_value"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_mini_val"
         app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="@+id/tv_mini_val" />
 
     <TextView
         android:id="@+id/textView26"
@@ -76,21 +80,26 @@
         style="@style/SmallHeadLineTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_blue"
+        android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView25"
+        android:textColor="#00C853"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_cafe_val"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_cafe_val"
-        app:layout_constraintTop_toTopOf="@+id/textView25" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_cafe_val" />
 
     <TextView
         android:id="@+id/textView28"
         style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/net_profit"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_net_profit"
         app:layout_constraintStart_toStartOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        app:layout_constraintTop_toTopOf="@+id/tv_net_profit" />
 
     <TextView
         android:id="@+id/textView29"
@@ -107,21 +116,27 @@
         style="@style/SmallHeadLineTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/border_blue"
+        android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView28"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_mini_val"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_mini_val"
-        app:layout_constraintTop_toTopOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_outs_val" />
 
     <TextView
         android:id="@+id/textView31"
         style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/play_value"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_play_value"
         app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+        app:layout_constraintTop_toTopOf="@+id/tv_play_value" />
 
     <TextView
         android:id="@+id/textView32"
@@ -138,24 +153,26 @@
         style="@style/SmallHeadLineTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_blue"
+        android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView31"
+        android:textColor="#00C853"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_net_profit"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_net_profit"
-        app:layout_constraintTop_toTopOf="@+id/textView31" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_mini_val" />
 
     <TextView
         android:id="@+id/textView34"
         style="@style/SmallHeadLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/outs_value"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_outs_val"
         app:layout_constraintStart_toStartOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toTopOf="@+id/tv_outs_val" />
 
     <TextView
         android:id="@+id/textView35"
@@ -172,10 +189,15 @@
         style="@style/SmallHeadLineTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_blue"
+        android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView34"
+        android:textColor="#F13939"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_play_value"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_play_value"
-        app:layout_constraintTop_toTopOf="@+id/textView34" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_play_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

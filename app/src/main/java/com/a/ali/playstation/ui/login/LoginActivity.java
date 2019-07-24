@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mUserNameTextInputLayout, mPasswordTextInputLayout;
     private MaterialButton mForgotPasswordButton, mLoginButton;
 
-    private Animatable2Compat mLogoAnimatable2Compat;
+//    private Animatable2Compat mLogoAnimatable2Compat;
 
     private AppNetworkRepository mAppNetworkRepository;
 
@@ -52,14 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         mForgotPasswordButton = findViewById(R.id.mbtn_forget_password);
         mLoginButton = findViewById(R.id.mbtn_login);
 
-        ImageView imageView = findViewById(R.id.imageView);
-
-        AnimatedVectorDrawableCompat drawableCompat = AnimatedVectorDrawableCompat.create(this, R.drawable.avd_controller_animator);
-        imageView.setImageDrawable(drawableCompat);
+//        ImageView imageView = findViewById(R.id.imageView);
+//        AnimatedVectorDrawableCompat drawableCompat = AnimatedVectorDrawableCompat.create(this, R.drawable.avd_controller_animator);
+//        imageView.setImageDrawable(drawableCompat)
+//        mLogoAnimatable2Compat = drawableCompat;
 
         mLoginButton = findViewById(R.id.mbtn_login);
 
-        mLogoAnimatable2Compat = drawableCompat;
         mLoginButton.setOnClickListener(view1 -> validateUserInfo());
 
         MaterialButton resetIpAddressMaterialButton = findViewById(R.id.mbtn_reset_ip);
@@ -84,12 +83,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateUserInfo() {
-        mLogoAnimatable2Compat.start();
+//        mLogoAnimatable2Compat.start();
 
         String userName = mUserNameTextInputLayout.getEditText().getText().toString();
         if (userName.isEmpty()) {
             mUserNameTextInputLayout.setError(getString(R.string.username_required));
-            mLogoAnimatable2Compat.stop();
+//            mLogoAnimatable2Compat.stop();
             return false;
         } else {
             mUserNameTextInputLayout.setError(null);
@@ -97,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = mPasswordTextInputLayout.getEditText().getText().toString();
             if (password.isEmpty()) {
                 mPasswordTextInputLayout.setError(getString(R.string.password_required));
-                mLogoAnimatable2Compat.stop();
+//                mLogoAnimatable2Compat.stop();
 
                 return false;
             } else {
@@ -143,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
-                    mLogoAnimatable2Compat.stop();
+//                    mLogoAnimatable2Compat.stop();
                 });
     }
 }
