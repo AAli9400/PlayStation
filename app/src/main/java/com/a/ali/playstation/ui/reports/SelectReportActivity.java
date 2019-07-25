@@ -148,7 +148,8 @@ public class SelectReportActivity extends AppCompatActivity implements ITextGUti
     private void generatePDFFile() {
         ITextGUtil.createPdfFile(
                 mReportTypeRadioGroup.getCheckedRadioButtonId() ==
-                        R.id.rb_cafe ? 8 : 7,
+                        R.id.rb_cafe ? 8 : mReportTypeRadioGroup.getCheckedRadioButtonId() ==
+                        R.id.rb_outs? 5 : 7,
                 getApplication(),
                 mReportTypeRadioGroup.getCheckedRadioButtonId() ==
                         R.id.rb_cafe ? new CafeReportHelper() : mReportTypeRadioGroup.getCheckedRadioButtonId() ==
